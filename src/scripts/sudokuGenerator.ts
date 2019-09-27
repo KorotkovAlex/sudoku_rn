@@ -1,4 +1,4 @@
-let mat: number[][];
+let mat: number[][] = [];
 let N: number; // number of columns/rows.
 let SRN: number; // square root of N
 let K: number; // No. Of missing digits
