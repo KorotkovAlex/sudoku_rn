@@ -1,4 +1,33 @@
 module.exports = {
-  root: true,
-  extends: '@react-native-community',
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    // "jsx-a11y",
+    // "import",
+    // "eslint-plugin-prettier",
+    // "eslint-plugin-react"
+  ],
+  "env": {
+    "jest": true,
+    "es6": true,
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "no-console": "warn",
+    "indent": ["error", 4],
+    "react/prop-types": "off"
+  },
+  "globals": {
+    "setTimeout": false,
+    "clearTimeout": false,
+    "setInterval": false,
+    "clearInterval": false,
+    "console": false,
+    "fetch": false,
+    "module": false,
+  }
 };
