@@ -53,6 +53,7 @@
             "check-type"
         ],
         "member-access": false
+        // "no-use-before-declare": true
     },
     "rulesDirectory": []
 }

@@ -1,20 +1,19 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
 } from 'react-native';
+import { createAppContainer } from 'react-navigation';
 
-import { Hello } from './src/components/Hello';
+import { RootStack } from './src/navigator/navigator';
+
+const AppContainer = createAppContainer(RootStack);
 
 const App = () => {
   return (
     <View>
-      <Hello name={'Vlad'} enthusiasmLevel={1} />
+      <AppContainer />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-});
 
 export default App;
