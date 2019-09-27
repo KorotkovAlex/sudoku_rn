@@ -52,8 +52,9 @@
             "check-separator",
             "check-type"
         ],
-        "member-access": false
-        // "no-use-before-declare": true
+        "member-access": false,
+        "no-var-requires": true,
+        "no-unused-variable": true
     },
     "rulesDirectory": []
 }
