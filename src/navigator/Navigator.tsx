@@ -2,9 +2,10 @@ import { createStackNavigator } from "react-navigation-stack";
 
 import Sudoku from "../screens/Sudoku";
 
-export const RootStack = createStackNavigator({
+export const RootStack = createStackNavigator(
+  {
     Home: {
-        screen: Sudoku,
+      screen: Sudoku,
         navigationOptions: {
             header: null
         }
