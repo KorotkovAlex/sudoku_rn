@@ -30,7 +30,7 @@
         "indent": [
             true,
             "spaces",
-            4
+            2
         ],
         "max-line-length": [
             true,
