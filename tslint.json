@@ -37,7 +37,7 @@
         "no-trailing-whitespace": true,
         "quotemark": [
             true,
-            "single",
+            "double",
             "avoid-escape"
         ],
         "semicolon": [
@@ -53,8 +53,7 @@
             "check-type"
         ],
         "member-access": false,
-        "no-var-requires": true,
-        "no-unused-variable": true
+        "no-var-requires": true
     },
     "rulesDirectory": []
 }

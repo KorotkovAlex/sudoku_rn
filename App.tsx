@@ -1,8 +1,7 @@
-import React from 'react';
-import {View} from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import React from "react";
+import { createAppContainer } from "react-navigation";
 
-import { RootStack } from './src/navigator/navigator';
+import { RootStack } from "./src/navigator/Navigator";
 
 const AppContainer = createAppContainer(RootStack);
 
