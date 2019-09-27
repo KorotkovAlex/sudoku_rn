@@ -1,59 +1,38 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended",
-        "tslint-config-standard",
-        "tslint-react",
-        "tslint-config-prettier"
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-standard",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "member-ordering": false,
+    "jsx-no-lambda": false,
+    "jsx-boolean-value": false,
+    "no-any": false,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "no-debugger": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "indent": [true, "spaces", 4],
+    "max-line-length": [true, 100],
+    "no-trailing-whitespace": true,
+    "quotemark": [true, "double", "avoid-escape"],
+    "semicolon": [true, "always"],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
     ],
-    "jsRules": {},
-    "rules": {
-        "ordered-imports": false,
-        "object-literal-sort-keys": false,
-        "member-ordering": false,
-        "jsx-no-lambda": false,
-        "jsx-boolean-value": false,
-        "no-any": false,
-        "no-console": [
-            true,
-            "debug",
-            "info",
-            "time",
-            "timeEnd",
-            "trace"
-        ],
-        "no-debugger": true,
-        "no-duplicate-variable": true,
-        "no-empty": false,
-        "indent": [
-            true,
-            "spaces",
-            4
-        ],
-        "max-line-length": [
-            true,
-            100
-        ],
-        "no-trailing-whitespace": true,
-        "quotemark": [
-            true,
-            "single",
-            "avoid-escape"
-        ],
-        "semicolon": [
-            true,
-            "always"
-        ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ],
-        "member-access": false
-        // "no-use-before-declare": true
-    },
-    "rulesDirectory": []
+    "member-access": false
+    // "no-use-before-declare": true
+  },
+  "rulesDirectory": []
 }
