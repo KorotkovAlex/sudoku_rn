@@ -3,15 +3,15 @@ import { FlatList, View, Text } from "react-native";
 import { getFullBoard } from "../scripts/sudokuGenerator";
 
 const Board = () => {
-  const [fullBoard, setFullBoard] = useState(null);
+  const [fullBoard, setFullBoard] = useState(Array<number[]>());
   useEffect(() => {
     setFullBoard(getFullBoard());
   });
 
-  const _renderRow = items => {
+  const _renderRow = (items: any) => {
     return (
       <>
-        {items.map((item, index) => {
+        {items.map((item: any, index: number) => {
           return <Text key={index}>{item}</Text>;
         })}
       </>
@@ -24,7 +24,7 @@ const Board = () => {
       renderItem={({ item }) => (
         <View style={{ flexDirection: "row" }}>{_renderRow(item)}</View>
       )}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(_item, index) => index.toString()}
     />
   );
 };

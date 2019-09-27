@@ -53,7 +53,8 @@
             "check-type"
         ],
         "member-access": false,
-        "no-var-requires": true
+        "no-var-requires": true,
+        "prefer-const": false
     },
     "rulesDirectory": []
 }
