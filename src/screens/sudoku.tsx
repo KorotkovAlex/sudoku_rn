@@ -14,7 +14,7 @@ class Sudoku extends React.Component<IProps> {
     render() {
         return (
             <View style={styles.view}>
-                <Text>{'Hello world'}</Text>
+                <Text>'Hello world'</Text>
             </View>
         );
     }
@@ -24,7 +24,8 @@ export default Sudoku;
 
 const styles = StyleSheet.create({
     view: {
-        flex: 1,
-        justifyContent: 'center'
+        height: '100%',
+        width: '100%',
+        // justifyContent: 'center'
     }
 });

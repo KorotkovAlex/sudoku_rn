@@ -10,9 +10,7 @@ const AppContainer = createAppContainer(RootStack);
 
 const App = () => {
   return (
-    <View>
-      <AppContainer />
-    </View>
+    <AppContainer />
   );
 };
 
