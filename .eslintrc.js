@@ -6,6 +6,7 @@ module.exports = {
   "parser": "babel-eslint",
   "plugins": [
     "react",
+    "react-hooks"
     // "jsx-a11y",
     // "import",
     // "eslint-plugin-prettier",
@@ -16,6 +17,8 @@ module.exports = {
     "es6": true,
   },
   "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "no-use-before-define": "off",
     "no-console": "warn",
     "indent": ["error", 4],

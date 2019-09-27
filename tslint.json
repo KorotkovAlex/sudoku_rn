@@ -4,10 +4,12 @@
         "tslint:recommended",
         "tslint-config-standard",
         "tslint-react",
-        "tslint-config-prettier"
+        "tslint-config-prettier",
+        "tslint-react-hooks"
     ],
     "jsRules": {},
     "rules": {
+        "react-hooks-nesting": "error",
         "ordered-imports": false,
         "object-literal-sort-keys": false,
         "member-ordering": false,
