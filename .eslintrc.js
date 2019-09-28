@@ -21,7 +21,7 @@ module.exports = {
     "react-hooks/exhaustive-deps": "warn",
     "no-use-before-define": "off",
     "no-console": "warn",
-    "indent": ["error", 4],
+    "indent": ["error", 2],
     "react/prop-types": "off"
   },
   "globals": {

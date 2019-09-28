@@ -1,22 +1,17 @@
 import React from "react";
-// import { createAppContainer } from "react-navigation";
-// import { RootStack } from "./src/navigator/Navigator";
-import { StatusBar, Button, View } from "react-native";
-import Sudoku from "./src/screens/Sudoku";
+import { createAppContainer } from "react-navigation";
+import { RootStack } from "./src/navigator/Navigator";
+import { StatusBar, View } from "react-native";
 
-// const AppContainer = createAppContainer(RootStack);
+const AppContainer = createAppContainer(RootStack);
 
 const App = () => {
   return (
     <View style={{flex: 1, justifyContent: "center"}}>
-      {/* <StatusBar
+      <StatusBar
         backgroundColor="#FE7D5E"
-        barStyle="light-content"/> */}
-      {/* <AppContainer /> */}
-      <Sudoku />
-      {/* <Button title={"Click"} color={"red"} onPress={() => {
-        console.log("gfgfdf");
-      }}/> */}
+        barStyle="light-content"/>
+      <AppContainer />
     </View>
   );
 };

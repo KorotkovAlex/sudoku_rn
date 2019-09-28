@@ -64,3 +64,4 @@ buck-out/
 .jest/
 /package-lock.json
 /package-lock.json
+/android/app/*.jks

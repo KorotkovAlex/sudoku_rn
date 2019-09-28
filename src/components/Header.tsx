@@ -1,17 +1,25 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 interface IHeader {
   leftItem?: React.ReactNode;
   rightItem?: React.ReactNode;
-  title: string;
+  centerItem: React.ReactNode;
 }
 
-const CustomHeader = ({ leftItem, rightItem, title }: IHeader) => {
+const CustomHeader = ({ leftItem, rightItem, centerItem }: IHeader) => {
   const _renderLeftItem = () => {
     return (
       <View style={styles.leftItem}>
         {leftItem}
+      </View>
+    );
+  };
+
+  const _renderCenterItem = () => {
+    return (
+      <View style={styles.centerItem}>
+        {centerItem}
       </View>
     );
   };
@@ -28,7 +36,7 @@ const CustomHeader = ({ leftItem, rightItem, title }: IHeader) => {
     <View style={styles.header}>
       <View style={styles.body}>
         {leftItem ? _renderLeftItem() : null}
-        <Text style={styles.title}>{ title }</Text>
+        {centerItem ? _renderCenterItem() : null}
         {rightItem ? _renderRightItem() : null}
       </View>
     </View>
@@ -38,7 +46,6 @@ const CustomHeader = ({ leftItem, rightItem, title }: IHeader) => {
 const styles = StyleSheet.create({
   header: {
     height: 200,
-    backgroundColor: "#FE7D5E"
   },
   body: {
     flexDirection: "row",
@@ -47,24 +54,22 @@ const styles = StyleSheet.create({
   leftItem: {
     color: "#fffbf7",
     flex: 1,
-    justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: 10
+    // justifyContent: "flex-start",
   },
   rightItem: {
     color: "#fffbf7",
     flex: 1,
-    justifyContent: "flex-end",
     alignItems: "flex-end",
     marginRight: 10
+    // justifyContent: "flex-end",
   },
-  title: {
-    color: "#fffbf7",
+  centerItem: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    fontSize: 18,
     textAlign: "center",
+    // justifyContent: "center",
   }
 });
 
