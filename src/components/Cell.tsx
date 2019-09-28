@@ -1,15 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-interface CellProps {
+interface ICellProps {
   title: string;
   style?: any;
   onPress: () => void;
 }
-const Cell = ({ title, style, onPress }: CellProps) => {
+const Cell = ({ title, style, onPress }: ICellProps) => {
   return (
     <TouchableOpacity onPress={onPress} style={[_styles.box, style]}>
-      <Text>{title}</Text>
+      <Text style={{color: "#47433f"}}>{title}</Text>
     </TouchableOpacity>
   );
 };

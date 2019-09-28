@@ -45,22 +45,24 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   leftItem: {
+    color: "#fffbf7",
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: 10
   },
   rightItem: {
+    color: "#fffbf7",
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "flex-end",
     marginRight: 10
   },
   title: {
+    color: "#fffbf7",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    color: "#FFF7EF",
     fontSize: 18,
     textAlign: "center",
   }

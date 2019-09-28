@@ -8,10 +8,12 @@ const Board = () => {
   const [currentCell, setCurrentCell] = useState({ row: null, column: null });
 
   useEffect(() => {
+    console.log("useEffect");
     setFullBoard(getFullBoard());
-  });
+  }, []);
 
-  const _onChooseSell = ({ row, column }) => {
+  const _onChooseSell = ({ row, column }: any) => {
+    console.log("click");
     setCurrentCell({
       column,
       row
@@ -23,17 +25,17 @@ const Board = () => {
     isUseTopRadius,
     isUseBottomRadius,
     columnNumber
-  }) => {
+  }: any) => {
     return (
       <>
         {items.map((item: any, index: number) => {
           let border;
 
-          if ((index + 1) % 3 === 0 && index + 1 != 9) {
+          if ((index + 1) % 3 === 0 && index + 1 !== 9) {
             border = {
               borderRightWidth: 1,
               borderColor: "#FE7D5E",
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -42,7 +44,7 @@ const Board = () => {
             border = {
               ...border,
               borderTopWidth: 0,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -50,7 +52,7 @@ const Board = () => {
             border = {
               ...border,
               borderBottomWidth: 0,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -58,7 +60,7 @@ const Board = () => {
             border = {
               ...border,
               borderTopLeftRadius: borderRadius,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -66,7 +68,7 @@ const Board = () => {
             border = {
               ...border,
               borderTopRightRadius: borderRadius,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -74,7 +76,7 @@ const Board = () => {
             border = {
               ...border,
               borderBottomLeftRadius: borderRadius,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -82,7 +84,7 @@ const Board = () => {
             border = {
               ...border,
               borderBottomRightRadius: borderRadius,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -90,7 +92,7 @@ const Board = () => {
             border = {
               ...border,
               borderRightWidth: 0,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -98,7 +100,7 @@ const Board = () => {
             border = {
               ...border,
               borderLeftWidth: 0,
-              backgroundColor: "white"
+              backgroundColor: "#ffffff"
             };
           }
 
@@ -108,7 +110,7 @@ const Board = () => {
           ) {
             border = {
               ...border,
-              backgroundColor: "blue"
+              backgroundColor: "#fff4e8"
             };
           }
 
@@ -118,7 +120,7 @@ const Board = () => {
           ) {
             border = {
               ...border,
-              backgroundColor: "red"
+              backgroundColor: "#fff4e8",
             };
           }
 
@@ -126,9 +128,7 @@ const Board = () => {
             <Cell
               style={border}
               key={index}
-              onPress={() => {
-                _onChooseSell({ column: columnNumber, row: index });
-              }}
+              onPress={() => _onChooseSell({ column: columnNumber, row: index })}
               title={item}
             />
           );
@@ -154,7 +154,7 @@ const Board = () => {
           shadowRadius: 2.22,
 
           elevation: 5,
-          backgroundColor: "white",
+          backgroundColor: "#ffffff",
           borderRadius: 14
         }}
       >
@@ -163,7 +163,7 @@ const Board = () => {
           renderItem={({ item, index }) => {
             let border;
 
-            if ((index + 1) % 3 === 0 && index + 1 != 9) {
+            if ((index + 1) % 3 === 0 && index + 1 !== 9) {
               border = {
                 borderBottomWidth: 0.7,
                 borderColor: "#FE7D5E"
