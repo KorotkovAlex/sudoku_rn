@@ -9,7 +9,8 @@ const App = () => {
   return (
     <View style={{flex: 1, justifyContent: "center"}}>
       <StatusBar
-        backgroundColor="#FE7D5E"
+        translucent
+        backgroundColor="rgba(0,0,0,0)"
         barStyle="light-content"/>
       <AppContainer />
     </View>

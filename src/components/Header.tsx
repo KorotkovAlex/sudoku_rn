@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 
 interface IHeader {
   leftItem?: React.ReactNode;
@@ -49,17 +49,17 @@ const styles = StyleSheet.create({
   },
   body: {
     flexDirection: "row",
-    marginTop: 15,
+    marginTop: StatusBar.currentHeight,
   },
   leftItem: {
-    color: "#fffbf7",
+    color: "#FFF7EF",
     flex: 1,
     alignItems: "flex-start",
     marginLeft: 10
     // justifyContent: "flex-start",
   },
   rightItem: {
-    color: "#fffbf7",
+    color: "#FFF7EF",
     flex: 1,
     alignItems: "flex-end",
     marginRight: 10
