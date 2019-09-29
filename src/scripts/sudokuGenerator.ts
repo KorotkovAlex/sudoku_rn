@@ -1,40 +1,14 @@
 let mat: number[][] = [];
-let N: number; // number of columns/rows.
-let SRN: number; // square root of N
-let K: number; // No. Of missing digits
+let fillSudoku: number[][] = [];
+let N: number;
+let SRN: number;
+let K: number;
 
-// Constructor
-// Sudoku( N,  K) {
-
-// Compute square root of N
-// SRN = SRNd.intValue();
-// }
-
-// Sudoku Generator
-function fillValues() {
-  // Fill the diagonal of SRN x SRN matrices
-  fillDiagonal();
-  // Fill remaining blocks
-  console.log("SRN", SRN);
-  console.log();
-  fillRemaining(0, SRN);
-
-  // setTimeout(() => {
-  console.log(mat);
-  // }, 5000);
-
-  // console.log("mat", mat);
-  // Remove Randomly K digits to make game
-  // removeKDigits(); // Заполняет нулями
-}
-
-// Fill the diagonal SRN number of SRN x SRN matrices
 function fillDiagonal() {
   for (let i = 0; i < N; i = i + SRN) {
     fillBox(i, i);
   }
 }
-// Fill a 3 x 3 matrix.
 function fillBox(row: number, col: number) {
   let num: number;
   for (let i = 0; i < SRN; i++) {
@@ -43,16 +17,15 @@ function fillBox(row: number, col: number) {
         num = randomGenerator(N);
       } while (!unUsedInBox(row, col, num));
       mat[row + i][col + j] = num;
+      fillSudoku[row + i][col + j] = num;
     }
   }
 }
 
-// Random generator
 function randomGenerator(num: number) {
   return Math.floor(Math.random() * num + 1);
 }
 
-// Check if safe to put in cell
 function CheckIfSafe(i: number, j: number, num: number) {
   return (
     unUsedInRow(i, num) &&
@@ -61,7 +34,6 @@ function CheckIfSafe(i: number, j: number, num: number) {
   );
 }
 
-// Returns false if given 3 x 3 block contains num.
 function unUsedInBox(rowStart: number, colStart: number, num: number) {
   for (let i = 0; i < SRN; i++) {
     for (let j = 0; j < SRN; j++) {
@@ -73,7 +45,6 @@ function unUsedInBox(rowStart: number, colStart: number, num: number) {
   return true;
 }
 
-// check in the row for existence
 function unUsedInRow(i: number, num: number) {
   for (let j = 0; j < N; j++) {
     if (mat[i][j] === num) {
@@ -83,7 +54,6 @@ function unUsedInRow(i: number, num: number) {
   return true;
 }
 
-// check in the row for existence
 function unUsedInCol(j: number, num: number) {
   for (let i = 0; i < N; i++) {
     if (mat[i][j] === num) {
@@ -93,12 +63,9 @@ function unUsedInCol(j: number, num: number) {
   return true;
 }
 
-// A recursive function to fill remaining
-// matrix
 function fillRemaining(c: number, k: number) {
   let i = c;
   let j = k;
-  // console.log(i + " " + j);
   if (j >= N && i < N - 1) {
     i = i + 1;
     j = 0;
@@ -128,39 +95,31 @@ function fillRemaining(c: number, k: number) {
   for (let num = 1; num <= N; num++) {
     if (CheckIfSafe(i, j, num)) {
       mat[i][j] = num;
+      fillSudoku[i][j] = num;
       if (fillRemaining(i, j + 1)) {
         return true;
       }
 
       mat[i][j] = 0;
+      fillSudoku[i][j];
     }
   }
   return false;
 }
 
-// Remove the K no. of digits to
-// complete game
 function removeKDigits() {
   let count = K;
   while (count !== 0) {
     let cellId = randomGenerator(N * N);
-    // console.log("cellId", cellId);
-    // System.out.println(cellId);
-    // extract coordinates i and j
     let i = Math.round(cellId / N);
 
-    // if (i === 9) {
-    //   i = i - 1;
-    // }
+    if (i === 9) {
+      i = i - 1;
+    }
 
     let j = cellId % 9;
     if (j !== 0) j = j - 1;
 
-    // System.out.println(i+" "+j);
-    // console.log(i + " " + j);
-    // if (i === 9) {
-    //   i = i - 1;
-    // }
     if (mat[i][j] !== 0) {
       console.log("count --");
       count--;
@@ -169,47 +128,34 @@ function removeKDigits() {
   }
 }
 
-// Print sudoku
-function printSudoku() {
-  for (let i = 0; i < N; i++) {
-    for (let j = 0; j < N; j++) console.log(mat[i][j] + " ");
-    console.log("");
-  }
-  console.log("");
-}
-
-// Driver code
-// function main(args) {
-//   int N = 9, K = 40; // 40 max возможно
-//   Sudoku sudoku = new Sudoku(N, K);
-//   sudoku.fillValues();
-//   sudoku.printSudoku();
-// }
-
 function create() {
   for (let i = 0; i < N; i++) {
     let column = [];
+    let column2 = [];
     for (let j = 0; j < N; j++) {
       column.push(0);
-      // let array = mat[i];
-      // if (array) {
-      //   mat[i] = 0;
-      // }
-      // mat[i] = 0;
+      column2.push(0);
     }
     mat.push(column);
+    fillSudoku.push(column2);
   }
 }
 
 export const getFullBoard = () => {
   N = 9;
-  K = 0;
+  K = 40;
   let SRNd = Math.sqrt(N);
   SRN = SRNd;
 
   create();
-  // printSudoku();
-  fillValues();
 
-  return mat;
+  fillDiagonal();
+  fillRemaining(0, SRN);
+
+  removeKDigits();
+
+  return {
+    fillSudoku,
+    withoutDigitsSudoku: mat
+  };
 };
