@@ -5,21 +5,24 @@ import useInterval from "../scripts/customHooks";
 interface ITimer {
   styleContent?: StyleProp<ViewStyle | TextStyle>;
   styleText?: StyleProp<ViewStyle | TextStyle>;
+  stop: boolean;
 }
 
-const Timer = ({styleContent, styleText}: ITimer) => {
+const Timer = ({styleContent, styleText, stop}: ITimer) => {
   const [secondsCounter, setSecond] = useState("00");
   const [minutesCounter, setMinute] = useState("00");
 
   useInterval(() => {
-    let num: any = (Number(secondsCounter) + 1).toString();
-    let count: any = minutesCounter;
-    if (secondsCounter === "59") {
-      count = (Number(minutesCounter) + 1).toString();
-      num = "00";
-      setMinute(count.length === 1 ? "0" + count : count);
+    if (!stop) {
+      let num: any = (Number(secondsCounter) + 1).toString();
+      let count: any = minutesCounter;
+      if (secondsCounter === "59") {
+        count = (Number(minutesCounter) + 1).toString();
+        num = "00";
+        setMinute(count.length === 1 ? "0" + count : count);
+      }
+      setSecond(num.length === 1 ? "0" + num : num);
     }
-    setSecond(num.length === 1 ? "0" + num : num);
   }, 1000);
 
   return (
