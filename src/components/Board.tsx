@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import { getFullBoard } from "../scripts/sudokuGenerator";
 import Cell from "./Cell";
 
@@ -8,7 +8,6 @@ const Board = () => {
   const [currentCell, setCurrentCell] = useState({ row: null, column: null });
 
   useEffect(() => {
-    console.log("useEffect");
     setFullBoard(getFullBoard());
   }, []);
 
@@ -20,92 +19,61 @@ const Board = () => {
     });
   };
 
-  const _renderRow = ({
-    items,
-    isUseTopRadius,
-    isUseBottomRadius,
-    columnNumber
-  }: any) => {
+  const _isAddBoldBorder = ({ index }: { index: number }) =>
+    (index + 1) % 3 === 0 && index + 1 !== 9;
+
+  const _renderRow = ({ items, useBorder, columnNumber }: any) => {
     return (
       <>
         {items.map((item: any, index: number) => {
-          let border;
+          const rowNumber = index;
 
-          if ((index + 1) % 3 === 0 && index + 1 !== 9) {
+          let border = {};
+
+          if (_isAddBoldBorder({ index: rowNumber })) {
             border = {
-              borderRightWidth: 1,
-              borderColor: "#FE7D5E",
-              backgroundColor: "#ffffff"
+              ...border,
+              ..._styles.boldRightBorder
             };
           }
 
-          const borderRadius = 8;
-          if (isUseTopRadius) {
+          if (useBorder) {
             border = {
               ...border,
-              borderTopWidth: 0,
-              backgroundColor: "#ffffff"
+              ...kindOfBorder[useBorder][rowNumber]
             };
           }
 
-          if (isUseBottomRadius) {
+          if (columnNumber === 0) {
             border = {
               ...border,
-              borderBottomWidth: 0,
-              backgroundColor: "#ffffff"
+              borderTopWidth: 0
             };
           }
 
-          if (isUseTopRadius && index === 0) {
+          if (columnNumber === 8) {
             border = {
               ...border,
-              borderTopLeftRadius: borderRadius,
-              backgroundColor: "#ffffff"
+              borderBottomWidth: 0
             };
           }
 
-          if (isUseTopRadius && index === 8) {
+          if (rowNumber === 8) {
             border = {
               ...border,
-              borderTopRightRadius: borderRadius,
-              backgroundColor: "#ffffff"
+              borderRightWidth: 0
             };
           }
 
-          if (isUseBottomRadius && index === 0) {
+          if (rowNumber === 0) {
             border = {
               ...border,
-              borderBottomLeftRadius: borderRadius,
-              backgroundColor: "#ffffff"
-            };
-          }
-
-          if (isUseBottomRadius && index === 8) {
-            border = {
-              ...border,
-              borderBottomRightRadius: borderRadius,
-              backgroundColor: "#ffffff"
-            };
-          }
-
-          if (index === 8) {
-            border = {
-              ...border,
-              borderRightWidth: 0,
-              backgroundColor: "#ffffff"
-            };
-          }
-
-          if (index === 0) {
-            border = {
-              ...border,
-              borderLeftWidth: 0,
-              backgroundColor: "#ffffff"
+              borderLeftWidth: 0
             };
           }
 
           if (
-            currentCell.row === index ||
+            currentCell.row === rowNumber ||
             currentCell.column === columnNumber
           ) {
             border = {
@@ -115,20 +83,22 @@ const Board = () => {
           }
 
           if (
-            currentCell.row === index &&
+            currentCell.row === rowNumber &&
             currentCell.column === columnNumber
           ) {
             border = {
               ...border,
-              backgroundColor: "#fff4e8",
+              backgroundColor: "#fff4e8"
             };
           }
 
           return (
             <Cell
               style={border}
-              key={index}
-              onPress={() => _onChooseSell({ column: columnNumber, row: index })}
+              key={rowNumber}
+              onPress={() =>
+                _onChooseSell({ column: columnNumber, row: rowNumber })
+              }
               title={item}
             />
           );
@@ -143,45 +113,34 @@ const Board = () => {
         margin: 10
       }}
     >
-      <View
-        style={{
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 1
-          },
-          shadowOpacity: 0.22,
-          shadowRadius: 2.22,
-
-          elevation: 5,
-          backgroundColor: "#ffffff",
-          borderRadius: 14
-        }}
-      >
+      <View style={_styles.sudokuContainer}>
         <FlatList
           data={fullBoard}
-          renderItem={({ item, index }) => {
+          renderItem={({ item, index }: { item: number; index: number }) => {
             let border;
 
-            if ((index + 1) % 3 === 0 && index + 1 !== 9) {
-              border = {
-                borderBottomWidth: 0.7,
-                borderColor: "#FE7D5E"
-              };
+            if (_isAddBoldBorder({ index })) {
+              border = _styles.boldBottomBorder;
+            }
+            let useBorder;
+            if (index === 8) {
+              useBorder = "BOTTOM";
+            }
+            if (index === 0) {
+              useBorder = "TOP";
             }
 
             return (
               <View style={{ flexDirection: "row", ...border }}>
                 {_renderRow({
                   items: item,
-                  isUseBottomRadius: index === 8,
-                  isUseTopRadius: index === 0,
+                  useBorder,
                   columnNumber: index
                 })}
               </View>
             );
           }}
-          keyExtractor={(_item, index) => index.toString()}
+          keyExtractor={(_item: any, index: any) => index.toString()}
         />
       </View>
     </View>
@@ -189,3 +148,73 @@ const Board = () => {
 };
 
 export default Board;
+
+const borderRadius = 8;
+
+const kindOfBorder: any = {
+  TOP: {
+    "0": {
+      borderTopLeftRadius: borderRadius
+    },
+    "8": {
+      borderTopRightRadius: borderRadius
+    }
+  },
+  BOTTOM: {
+    "0": {
+      borderBottomLeftRadius: borderRadius
+    },
+    "8": {
+      borderBottomRightRadius: borderRadius
+    }
+  }
+};
+
+const _styles = StyleSheet.create({
+  sudokuContainer: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 5,
+    backgroundColor: "#ffffff",
+    borderRadius: 14
+  },
+
+  boldBottomBorder: {
+    borderBottomWidth: 0.7,
+    borderColor: "#FE7D5E"
+  },
+  boldRightBorder: {
+    borderRightWidth: 0.7,
+    borderColor: "#FE7D5E"
+  },
+
+  borderTopLeft: {
+    borderTopLeftRadius: 8
+  },
+
+  borderTopRight: {
+    borderTopRightRadius: 8
+  },
+
+  borderBottomLeft: {
+    borderBottomLeftRadius: 8
+  },
+
+  borderBottomRight: {
+    borderBottomRightRadius: 8
+  },
+
+  cleanBorderRight: {
+    borderRightWidth: 0
+  },
+
+  cleanBorderLeft: {
+    borderLeftWidth: 0
+  }
+});
