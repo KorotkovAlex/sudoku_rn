@@ -5,10 +5,16 @@ import Cell from "./Cell";
 
 const Board = () => {
   const [fullBoard, setFullBoard] = useState(Array<number[]>());
+  const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
+    Array<number[]>()
+  );
   const [currentCell, setCurrentCell] = useState({ row: null, column: null });
 
   useEffect(() => {
-    setFullBoard(getFullBoard());
+    const board = getFullBoard();
+
+    setFullBoard(board.fillSudoku);
+    setWithoutDigitsBoard(board.withoutDigitsSudoku);
   }, []);
 
   const _onChooseSell = ({ row, column }: any) => {
@@ -78,7 +84,7 @@ const Board = () => {
           ) {
             border = {
               ...border,
-              backgroundColor: "#fff4e8"
+              backgroundColor: "#FADBC5"
             };
           }
 
@@ -88,7 +94,7 @@ const Board = () => {
           ) {
             border = {
               ...border,
-              backgroundColor: "#fff4e8"
+              backgroundColor: "white"
             };
           }
 
