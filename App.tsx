@@ -7,11 +7,12 @@ const AppContainer = createAppContainer(RootStack);
 
 const App = () => {
   return (
-    <View style={{flex: 1, justifyContent: "center"}}>
+    <View style={{ flex: 1, justifyContent: "center" }}>
       <StatusBar
         translucent
         backgroundColor="rgba(0,0,0,0)"
-        barStyle="light-content"/>
+        barStyle="light-content"
+      />
       <AppContainer />
     </View>
   );
