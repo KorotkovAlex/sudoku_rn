@@ -121,7 +121,6 @@ function removeKDigits() {
     if (j !== 0) j = j - 1;
 
     if (mat[i][j] !== 0) {
-      console.log("count --");
       count--;
       mat[i][j] = 0;
     }
