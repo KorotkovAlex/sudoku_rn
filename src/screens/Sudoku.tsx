@@ -7,6 +7,7 @@ import Timer from "../components/Timer";
 import CustomButton from "../components/CustomButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
+import ListNumberButtons from "../components/ListNumberButton";
 
 const Sudoku = () => {
   const [isStop, setStop] = useState(false);
@@ -17,8 +18,9 @@ const Sudoku = () => {
         <Text style={styles.title}>{"Судоку"}</Text>
         <Timer
           stop={isStop}
-          styleContent={{marginTop: 20, alignItems: "center"}}
-          styleText={styles.timer}/>
+          styleContent={{ marginTop: 20, alignItems: "center" }}
+          styleText={styles.timer}
+        />
       </View>
     );
   };
@@ -27,33 +29,46 @@ const Sudoku = () => {
     isStop ? setStop(false) : setStop(true);
   };
 
+  const clickNumberButton = () => {};
+
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
         colors={theme.light.linear_gradient}
-        style={{flex: 1}}>
-        <CustomHeader
-          centerItem={_renderCenterItem()}/>
+        style={{ flex: 1 }}
+      >
+        <CustomHeader centerItem={_renderCenterItem()} />
       </LinearGradient>
       <View style={styles.view}>
         <Board />
         <View style={styles.viewButton}>
+          <ListNumberButtons
+            onPress={clickNumberButton}
+            customStyle={{ height: 50, width: 50 }}
+            underlayNB={theme.light.underlayPersik}
+          />
           <CustomButton
             underlay={theme.light.underlayPersik}
             style={styles.customButton}
-            onPress={_startStopTimer}>
-              {isStop ? <Icon
+            onPress={_startStopTimer}
+          >
+            {isStop ? (
+              <Icon
                 style={styles.iconAdd}
                 name="play-arrow"
                 size={25}
-                color={theme.light.persik}/> :
+                color={theme.light.persik}
+              />
+            ) : (
               <Icon
                 style={styles.iconAdd}
                 name="pause"
                 size={25}
-                color={theme.light.persik}/>}
+                color={theme.light.persik}
+              />
+            )}
           </CustomButton>
         </View>
       </View>
@@ -85,10 +100,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.light.white,
-    fontSize: 18,
+    fontSize: 18
   },
   timer: {
     color: theme.light.white,
-    fontSize: 24,
+    fontSize: 24
   }
 });
