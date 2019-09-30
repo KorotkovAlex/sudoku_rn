@@ -46,26 +46,23 @@ const Sudoku = () => {
         <View style={[styles.view, { paddingTop: 100 }]}>
           <Board />
           <View style={styles.viewButton}>
+            <ListNumberButtons
+              onPress={clickNumberButton}
+              underlayNB={theme.light.underlayPersik}
+            />
+          </View>
+          <View style={{ flex: 1, alignItems: "center" }}>
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
               onPress={_startStopTimer}
             >
-              {isStop ? (
-                <Icon
-                  style={styles.iconAdd}
-                  name="play-arrow"
-                  size={25}
-                  color={theme.light.persik}
-                />
-              ) : (
-                <Icon
-                  style={styles.iconAdd}
-                  name="pause"
-                  size={25}
-                  color={theme.light.persik}
-                />
-              )}
+              <Icon
+                style={styles.iconAdd}
+                name={isStop ? "play-arrow" : "pause"}
+                size={25}
+                color={theme.light.persik}
+              />
             </CustomButton>
           </View>
         </View>
@@ -77,9 +74,11 @@ const Sudoku = () => {
 export default Sudoku;
 
 const styles = StyleSheet.create({
-  view: {},
+  view: {
+    flex: 1
+  },
   viewButton: {
-    alignItems: "center"
+    flex: 1
   },
   customButton: {
     height: 50,
@@ -88,7 +87,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: theme.light.white,
     borderWidth: 1,
-    borderColor: theme.light.persik
+    borderColor: theme.light.persik,
+    marginTop: 20
   },
   iconAdd: {
     color: theme.light.persik,
