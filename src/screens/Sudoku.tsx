@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, Alert } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -9,19 +9,22 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 
 const Sudoku = () => {
-  // const []
+  const [isStop, setStop] = useState(false);
 
   const _renderCenterItem = () => {
     return (
       <View>
         <Text style={styles.title}>{"Судоку"}</Text>
-        <Timer styleContent={{marginTop: 20, alignItems: "center"}} styleText={styles.timer}/>
+        <Timer
+          stop={isStop}
+          styleContent={{marginTop: 20, alignItems: "center"}}
+          styleText={styles.timer}/>
       </View>
     );
   };
 
-  const _clickCustomButton = () => {
-    Alert.alert("Click!");
+  const _startStopTimer = () => {
+    isStop ? setStop(false) : setStop(true);
   };
 
   return (
@@ -40,17 +43,17 @@ const Sudoku = () => {
           <CustomButton
             underlay={theme.light.underlayPersik}
             style={styles.customButton}
-            onPress={_clickCustomButton}>
-              {/* <Icon
-                style={styles.iconAdd}
-                name="pause"
-                size={25}
-                color={theme.light.persik}/> */}
-              <Icon
+            onPress={_startStopTimer}>
+              {isStop ? <Icon
                 style={styles.iconAdd}
                 name="play-arrow"
                 size={25}
-                color={theme.light.persik}/>
+                color={theme.light.persik}/> :
+              <Icon
+                style={styles.iconAdd}
+                name="pause"
+                size={25}
+                color={theme.light.persik}/>}
           </CustomButton>
         </View>
       </View>
@@ -65,8 +68,6 @@ const styles = StyleSheet.create({
     flex: 2
   },
   viewButton: {
-    // flex: 1,
-    // backgroundColor: "black",
     alignItems: "center"
   },
   customButton: {
@@ -83,11 +84,11 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   title: {
-    color: "#FFF7EF",
+    color: theme.light.white,
     fontSize: 18,
   },
   timer: {
-    color: "#FFF7EF",
+    color: theme.light.white,
     fontSize: 24,
   }
 });
