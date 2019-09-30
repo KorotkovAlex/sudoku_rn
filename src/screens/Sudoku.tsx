@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import { StyleSheet, View, Text, Alert, Modal } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -41,37 +41,35 @@ const Sudoku = () => {
       >
         <CustomHeader centerItem={_renderCenterItem()} />
       </LinearGradient>
-      <View style={styles.view}>
-        <Board />
-        <View style={styles.viewButton}>
-          <ListNumberButtons
-            onPress={clickNumberButton}
-            customStyle={{ height: 50, width: 50 }}
-            underlayNB={theme.light.underlayPersik}
-          />
-          <CustomButton
-            underlay={theme.light.underlayPersik}
-            style={styles.customButton}
-            onPress={_startStopTimer}
-          >
-            {isStop ? (
-              <Icon
-                style={styles.iconAdd}
-                name="play-arrow"
-                size={25}
-                color={theme.light.persik}
-              />
-            ) : (
-              <Icon
-                style={styles.iconAdd}
-                name="pause"
-                size={25}
-                color={theme.light.persik}
-              />
-            )}
-          </CustomButton>
+      <View style={{ flex: 2 }} />
+      <Modal animationType="fade" transparent={true} visible={true}>
+        <View style={[styles.view, { paddingTop: 100 }]}>
+          <Board />
+          <View style={styles.viewButton}>
+            <CustomButton
+              underlay={theme.light.underlayPersik}
+              style={styles.customButton}
+              onPress={_startStopTimer}
+            >
+              {isStop ? (
+                <Icon
+                  style={styles.iconAdd}
+                  name="play-arrow"
+                  size={25}
+                  color={theme.light.persik}
+                />
+              ) : (
+                <Icon
+                  style={styles.iconAdd}
+                  name="pause"
+                  size={25}
+                  color={theme.light.persik}
+                />
+              )}
+            </CustomButton>
+          </View>
         </View>
-      </View>
+      </Modal>
     </View>
   );
 };
@@ -79,9 +77,7 @@ const Sudoku = () => {
 export default Sudoku;
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 2
-  },
+  view: {},
   viewButton: {
     alignItems: "center"
   },
