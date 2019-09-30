@@ -28,6 +28,22 @@ const Board = () => {
   const _isAddBoldBorder = ({ index }: { index: number }) =>
     (index + 1) % 3 === 0 && index + 1 !== 9;
 
+  const _isCurrentCell = ({
+    rowNumber,
+    columnNumber
+  }: {
+    rowNumber: number;
+    columnNumber: number;
+  }) => currentCell.row === rowNumber && currentCell.column === columnNumber;
+
+  const _isNeighbourCell = ({
+    rowNumber,
+    columnNumber
+  }: {
+    rowNumber: number;
+    columnNumber: number;
+  }) => currentCell.row === rowNumber || currentCell.column === columnNumber;
+
   const _renderRow = ({ items, useBorder, columnNumber }: any) => {
     return (
       <>
@@ -78,20 +94,14 @@ const Board = () => {
             };
           }
 
-          if (
-            currentCell.row === rowNumber ||
-            currentCell.column === columnNumber
-          ) {
+          if (_isNeighbourCell({ rowNumber, columnNumber })) {
             border = {
               ...border,
               backgroundColor: "#FADBC5"
             };
           }
 
-          if (
-            currentCell.row === rowNumber &&
-            currentCell.column === columnNumber
-          ) {
+          if (_isCurrentCell({ rowNumber, columnNumber })) {
             border = {
               ...border,
               backgroundColor: "white"
