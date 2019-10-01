@@ -2,12 +2,8 @@ import React from "react";
 import {
   Text,
   StyleSheet,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
   NativeSyntheticEvent,
   NativeTouchEvent,
-  Alert,
   FlatList,
   View
 } from "react-native";
@@ -21,15 +17,12 @@ interface INumberButton {
 
 const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
   const numberData = [["1", "2", "3", "4", "5"], ["6", "7", "8", "9"]];
-  const clickButton = () => {
-    Alert.alert("Click number button!");
-  };
 
   return (
     <FlatList
       data={numberData}
       keyExtractor={(_item, index) => index.toString()}
-      renderItem={({ item, index }: { item: string[]; index: number }) => {
+      renderItem={({ item }: { item: string[] }) => {
         let cells = item.map((cell, i) => {
           return (
             <View
@@ -42,8 +35,8 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
               <CustomButton
                 bgroundColor={"#fff"}
                 style={styles.buttonStyle}
-                onPress={clickButton}
-                underlay={theme.light.white}
+                onPress={onPress}
+                underlay={underlayNB}
               >
                 <Text style={styles.textCell}>{cell}</Text>
               </CustomButton>

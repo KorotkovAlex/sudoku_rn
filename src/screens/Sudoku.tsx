@@ -29,7 +29,9 @@ const Sudoku = () => {
     isStop ? setStop(false) : setStop(true);
   };
 
-  const clickNumberButton = () => {};
+  const clickNumberButton = () => {
+    Alert.alert("Click number button!");
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -48,7 +50,7 @@ const Sudoku = () => {
           <View style={styles.viewButton}>
             <ListNumberButtons
               onPress={clickNumberButton}
-              underlayNB={theme.light.underlayPersik}
+              underlayNB={theme.light.white}
             />
           </View>
           <View style={{ flex: 1, alignItems: "center" }}>
