@@ -24,13 +24,13 @@ const CustomButton = ({
   children,
   underlay = "black"
 }: IButton) => {
-  console.log(children);
   return (
     <TouchableHighlight
       onPress={onPress}
-      style={[styles.btnClickContain, {backgroundColor: bgroundColor}, style]}
-      underlayColor={underlay}>
-        {children}
+      style={[styles.btnClickContain, { backgroundColor: bgroundColor }, style]}
+      underlayColor={underlay}
+    >
+      {children}
     </TouchableHighlight>
   );
 };
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     // alignSelf: "stretch",
     // borderRadius: 5,
     padding: 5,
-    marginTop: 5,
+    marginTop: 5
     // marginBottom: 5,
     // height: 50,
     // width: 50

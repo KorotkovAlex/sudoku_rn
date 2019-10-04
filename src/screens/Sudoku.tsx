@@ -53,18 +53,39 @@ const Sudoku = () => {
               underlayNB={theme.light.white}
             />
           </View>
-          <View style={{ flex: 1, alignItems: "center" }}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row"
+            }}
+          >
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
+              onPress={() => console.log("click")}
+            >
+              <Text style={styles.titleButton}>Reload</Text>
+            </CustomButton>
+            <CustomButton
+              underlay={theme.light.underlayPersik}
+              style={styles.playPauseButton}
               onPress={_startStopTimer}
             >
               <Icon
                 style={styles.iconAdd}
-                name={isStop ? "play-arrow" : "pause"}
-                size={25}
+                name={isStop ? "play" : "pause"}
+                size={30}
                 color={theme.light.persik}
               />
+            </CustomButton>
+            <CustomButton
+              underlay={theme.light.underlayPersik}
+              style={styles.customButton}
+              onPress={() => console.log("click")}
+            >
+              <Text style={styles.titleButton}>Eraser</Text>
             </CustomButton>
           </View>
         </View>
@@ -82,15 +103,31 @@ const styles = StyleSheet.create({
   viewButton: {
     flex: 1
   },
-  customButton: {
-    height: 50,
-    width: 50,
+  playPauseButton: {
+    height: 60,
+    width: 60,
     justifyContent: "center",
-    borderRadius: 25,
+    borderRadius: 30,
     backgroundColor: theme.light.white,
     borderWidth: 1,
     borderColor: theme.light.persik,
-    marginTop: 20
+    marginTop: 20,
+    marginHorizontal: 15
+  },
+  customButton: {
+    height: 50,
+    width: 70,
+    justifyContent: "center",
+    backgroundColor: theme.light.white,
+    borderWidth: 1,
+    borderColor: theme.light.persik,
+    marginTop: 20,
+    borderRadius: 10
+  },
+  titleButton: {
+    textAlign: "center",
+    fontSize: 16,
+    color: theme.light.persik
   },
   iconAdd: {
     color: theme.light.persik,
