@@ -34,18 +34,29 @@ const Sudoku = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        colors={theme.light.linear_gradient}
-        style={{ flex: 1 }}
+    <>
+      <View style={{ flex: 1 }}>
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          colors={theme.light.linear_gradient}
+          style={{ flex: 1 }}
+        >
+          <CustomHeader centerItem={_renderCenterItem()} />
+        </LinearGradient>
+        <View style={{ flex: 2 }} />
+      </View>
+
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0
+        }}
       >
-        <CustomHeader centerItem={_renderCenterItem()} />
-      </LinearGradient>
-      <View style={{ flex: 2 }} />
-      <Modal animationType="fade" transparent={true} visible={true}>
-        <View style={[styles.view, { paddingTop: 100 }]}>
+        <View style={[styles.view, { paddingTop: 150 }]}>
           <Board />
           <View style={styles.viewButton}>
             <ListNumberButtons
@@ -89,8 +100,8 @@ const Sudoku = () => {
             </CustomButton>
           </View>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </>
   );
 };
 
