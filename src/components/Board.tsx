@@ -18,12 +18,23 @@ const Board = forwardRef(({}, ref) => {
   );
   const [userBoard, setUserBoard] = useState(Array<CellType[]>());
 
-  useEffect(() => {
+  const _settingBoard = () => {
     const board = getFullBoard();
 
     setFullBoard(board.fillSudoku);
     setWithoutDigitsBoard(board.withoutDigitsSudoku);
     setUserBoard(board.withoutDigitsSudoku);
+  };
+
+  const _cleanCurrentCell = () => {
+    setCurrentCell({
+      row: -1,
+      column: -1
+    });
+  };
+
+  useEffect(() => {
+    _settingBoard();
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -36,6 +47,10 @@ const Board = forwardRef(({}, ref) => {
       let newUserBoard = [...userBoard];
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+    },
+
+    reloadBoard() {
+      _cleanCurrentCell();
     }
   }));
 
@@ -154,7 +169,7 @@ const Board = forwardRef(({}, ref) => {
       <View style={_styles.sudokuContainer}>
         <FlatList
           data={userBoard}
-          extraData={userBoard}
+          // extraData={userBoard}
           renderItem={({ item, index }: { item: number; index: number }) => {
             let border;
 

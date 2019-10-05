@@ -30,7 +30,7 @@ const Sudoku = () => {
     isStop ? setStop(false) : setStop(true);
   };
 
-  const clickNumberButton = (cell: number) => {
+  const _setNumber = (cell: number) => {
     boardRef.current.setNumber(cell);
   };
 
@@ -61,7 +61,7 @@ const Sudoku = () => {
           <Board ref={boardRef} />
           <View style={styles.viewButton}>
             <ListNumberButtons
-              onPress={clickNumberButton}
+              onPress={_setNumber}
               underlayNB={theme.light.white}
             />
           </View>
@@ -76,7 +76,7 @@ const Sudoku = () => {
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
-              onPress={() => console.log("click")}
+              onPress={() => boardRef.current.reloadBoard()}
             >
               <Text style={styles.titleButton}>Reload</Text>
             </CustomButton>
@@ -87,7 +87,7 @@ const Sudoku = () => {
             >
               <Icon
                 style={styles.iconAdd}
-                name={isStop ? "play" : "pause"}
+                name={isStop ? "play-arrow" : "pause"}
                 size={30}
                 color={theme.light.persik}
               />
@@ -95,7 +95,7 @@ const Sudoku = () => {
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
-              onPress={() => console.log("click")}
+              onPress={() => _setNumber(0)}
             >
               <Text style={styles.titleButton}>Eraser</Text>
             </CustomButton>
