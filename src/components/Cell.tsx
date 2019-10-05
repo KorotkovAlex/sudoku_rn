@@ -28,9 +28,9 @@ const _styles = StyleSheet.create({
   box: {
     flex: 1,
     alignItems: "center",
-    borderRightWidth: 0.2,
+    borderRightWidth: 0.3,
     borderRightColor: "#FE7D5E",
-    borderBottomWidth: 0.2,
+    borderBottomWidth: 0.3,
     borderBottomColor: "#FE7D5E",
     padding: 10,
     fontSize: 16

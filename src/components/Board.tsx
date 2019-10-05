@@ -169,7 +169,6 @@ const Board = forwardRef(({}, ref) => {
       <View style={_styles.sudokuContainer}>
         <FlatList
           data={userBoard}
-          // extraData={userBoard}
           renderItem={({ item, index }: { item: number; index: number }) => {
             let border;
 
