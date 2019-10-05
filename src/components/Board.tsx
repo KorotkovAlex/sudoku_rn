@@ -1,24 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle
+} from "react";
 import { FlatList, View, StyleSheet } from "react-native";
-import { getFullBoard } from "../scripts/sudokuGenerator";
+
 import Cell from "./Cell";
 
-const Board = () => {
+import { getFullBoard } from "../scripts/sudokuGenerator";
+
+const Board = forwardRef(({}, ref) => {
+  const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
   const [fullBoard, setFullBoard] = useState(Array<number[]>());
   const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
     Array<number[]>()
   );
-  const [currentCell, setCurrentCell] = useState({ row: null, column: null });
+  const [userBoard, setUserBoard] = useState(Array<number[]>());
 
   useEffect(() => {
     const board = getFullBoard();
 
     setFullBoard(board.fillSudoku);
     setWithoutDigitsBoard(board.withoutDigitsSudoku);
+    setUserBoard(board.withoutDigitsSudoku);
   }, []);
 
+  useImperativeHandle(ref, () => ({
+    setNumber(digit: number) {
+      const { row, column } = currentCell;
+      if (row === -1) {
+        return;
+      }
+
+      let newUserBoard = [...userBoard];
+      newUserBoard[column][row] = digit;
+      setUserBoard(newUserBoard);
+    }
+  }));
+
   const _onChooseSell = ({ row, column }: any) => {
-    console.log("click");
     setCurrentCell({
       column,
       row
@@ -115,7 +136,7 @@ const Board = () => {
               onPress={() =>
                 _onChooseSell({ column: columnNumber, row: rowNumber })
               }
-              title={item}
+              title={item === 0 ? "" : item}
             />
           );
         })}
@@ -131,7 +152,8 @@ const Board = () => {
     >
       <View style={_styles.sudokuContainer}>
         <FlatList
-          data={fullBoard}
+          data={userBoard}
+          extraData={userBoard}
           renderItem={({ item, index }: { item: number; index: number }) => {
             let border;
 
@@ -161,7 +183,7 @@ const Board = () => {
       </View>
     </View>
   );
-};
+});
 
 export default Board;
 

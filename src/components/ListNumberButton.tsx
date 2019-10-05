@@ -12,17 +12,17 @@ import theme from "../shared/Constants";
 
 interface INumberButton {
   underlayNB: string;
-  onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
+  onPress: (cell: number) => void;
 }
 
 const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
-  const numberData = [["1", "2", "3", "4", "5"], ["6", "7", "8", "9"]];
+  const numberData = [[1, 2, 3, 4, 5], [6, 7, 8, 9]];
 
   return (
     <FlatList
       data={numberData}
       keyExtractor={(_item, index) => index.toString()}
-      renderItem={({ item }: { item: string[] }) => {
+      renderItem={({ item }: { item: number[] }) => {
         let cells = item.map((cell, i) => {
           return (
             <View
@@ -35,7 +35,7 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
               <CustomButton
                 bgroundColor={"#fff"}
                 style={styles.buttonStyle}
-                onPress={onPress}
+                onPress={() => onPress(cell)}
                 underlay={underlayNB}
               >
                 <Text style={styles.textCell}>{cell}</Text>

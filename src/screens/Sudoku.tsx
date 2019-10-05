@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Alert, Modal } from "react-native";
+import React, { useState, useRef } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -10,6 +10,7 @@ import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
 
 const Sudoku = () => {
+  const boardRef = useRef(React.createRef());
   const [isStop, setStop] = useState(false);
 
   const _renderCenterItem = () => {
@@ -29,8 +30,8 @@ const Sudoku = () => {
     isStop ? setStop(false) : setStop(true);
   };
 
-  const clickNumberButton = () => {
-    Alert.alert("Click number button!");
+  const clickNumberButton = (cell: number) => {
+    boardRef.current.setNumber(cell);
   };
 
   return (
@@ -57,7 +58,7 @@ const Sudoku = () => {
         }}
       >
         <View style={[styles.view, { paddingTop: 150 }]}>
-          <Board />
+          <Board ref={boardRef} />
           <View style={styles.viewButton}>
             <ListNumberButtons
               onPress={clickNumberButton}
