@@ -29,7 +29,7 @@ const Board = forwardRef(({}, ref) => {
   useImperativeHandle(ref, () => ({
     setNumber(digit: number) {
       const { row, column } = currentCell;
-      if (row === -1) {
+      if (row === -1 || userBoard[column][row].isPermanent) {
         return;
       }
 
