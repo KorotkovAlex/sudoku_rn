@@ -51,6 +51,7 @@ const Board = forwardRef(({}, ref) => {
 
     reloadBoard() {
       _cleanCurrentCell();
+      _settingBoard();
     }
   }));
 

@@ -146,6 +146,8 @@ function create() {
 }
 
 export const getFullBoard = () => {
+  mat = [];
+  fillSudoku = [];
   N = 9;
   K = 40;
   let SRNd = Math.sqrt(N);
