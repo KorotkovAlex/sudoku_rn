@@ -1,5 +1,9 @@
-let mat: number[][] = [];
-let fillSudoku: number[][] = [];
+export type CellType = {
+  isPermanent: boolean;
+  digit: number;
+};
+let mat: CellType[][] = [];
+let fillSudoku: CellType[][] = [];
 let N: number;
 let SRN: number;
 let K: number;
@@ -16,8 +20,8 @@ function fillBox(row: number, col: number) {
       do {
         num = randomGenerator(N);
       } while (!unUsedInBox(row, col, num));
-      mat[row + i][col + j] = num;
-      fillSudoku[row + i][col + j] = num;
+      mat[row + i][col + j].digit = num;
+      fillSudoku[row + i][col + j].digit = num;
     }
   }
 }
@@ -37,7 +41,7 @@ function CheckIfSafe(i: number, j: number, num: number) {
 function unUsedInBox(rowStart: number, colStart: number, num: number) {
   for (let i = 0; i < SRN; i++) {
     for (let j = 0; j < SRN; j++) {
-      if (mat[rowStart + i][colStart + j] === num) {
+      if (mat[rowStart + i][colStart + j].digit === num) {
         return false;
       }
     }
@@ -47,7 +51,7 @@ function unUsedInBox(rowStart: number, colStart: number, num: number) {
 
 function unUsedInRow(i: number, num: number) {
   for (let j = 0; j < N; j++) {
-    if (mat[i][j] === num) {
+    if (mat[i][j].digit === num) {
       return false;
     }
   }
@@ -56,7 +60,7 @@ function unUsedInRow(i: number, num: number) {
 
 function unUsedInCol(j: number, num: number) {
   for (let i = 0; i < N; i++) {
-    if (mat[i][j] === num) {
+    if (mat[i][j].digit === num) {
       return false;
     }
   }
@@ -94,14 +98,14 @@ function fillRemaining(c: number, k: number) {
 
   for (let num = 1; num <= N; num++) {
     if (CheckIfSafe(i, j, num)) {
-      mat[i][j] = num;
-      fillSudoku[i][j] = num;
+      mat[i][j].digit = num;
+      fillSudoku[i][j].digit = num;
       if (fillRemaining(i, j + 1)) {
         return true;
       }
 
-      mat[i][j] = 0;
-      fillSudoku[i][j];
+      mat[i][j].digit = 0;
+      fillSudoku[i][j].digit = 0;
     }
   }
   return false;
@@ -120,9 +124,10 @@ function removeKDigits() {
     let j = cellId % 9;
     if (j !== 0) j = j - 1;
 
-    if (mat[i][j] !== 0) {
+    if (mat[i][j].digit !== 0) {
       count--;
-      mat[i][j] = 0;
+      mat[i][j].digit = 0;
+      mat[i][j].isPermanent = false;
     }
   }
 }
@@ -132,8 +137,8 @@ function create() {
     let column = [];
     let column2 = [];
     for (let j = 0; j < N; j++) {
-      column.push(0);
-      column2.push(0);
+      column.push({ isPermanent: true, digit: 0 });
+      column2.push({ isPermanent: true, digit: 0 });
     }
     mat.push(column);
     fillSudoku.push(column2);

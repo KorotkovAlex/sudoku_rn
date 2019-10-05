@@ -8,15 +8,15 @@ import { FlatList, View, StyleSheet } from "react-native";
 
 import Cell from "./Cell";
 
-import { getFullBoard } from "../scripts/sudokuGenerator";
+import { getFullBoard, CellType } from "../scripts/sudokuGenerator";
 
 const Board = forwardRef(({}, ref) => {
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
-  const [fullBoard, setFullBoard] = useState(Array<number[]>());
+  const [fullBoard, setFullBoard] = useState(Array<CellType[]>());
   const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
-    Array<number[]>()
+    Array<CellType[]>()
   );
-  const [userBoard, setUserBoard] = useState(Array<number[]>());
+  const [userBoard, setUserBoard] = useState(Array<CellType[]>());
 
   useEffect(() => {
     const board = getFullBoard();
@@ -34,7 +34,7 @@ const Board = forwardRef(({}, ref) => {
       }
 
       let newUserBoard = [...userBoard];
-      newUserBoard[column][row] = digit;
+      newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
     }
   }));
@@ -68,7 +68,7 @@ const Board = forwardRef(({}, ref) => {
   const _renderRow = ({ items, useBorder, columnNumber }: any) => {
     return (
       <>
-        {items.map((item: any, index: number) => {
+        {items.map((item: CellType, index: number) => {
           const rowNumber = index;
 
           let border = {};
@@ -133,10 +133,11 @@ const Board = forwardRef(({}, ref) => {
             <Cell
               style={border}
               key={rowNumber}
+              item={item}
               onPress={() =>
                 _onChooseSell({ column: columnNumber, row: rowNumber })
               }
-              title={item === 0 ? "" : item}
+              title={item.digit === 0 ? "" : item.digit.toString()}
             />
           );
         })}
