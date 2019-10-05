@@ -28,8 +28,10 @@ const _styles = StyleSheet.create({
   box: {
     flex: 1,
     alignItems: "center",
-    borderWidth: 0.2,
-    borderColor: "#FE7D5E",
+    borderRightWidth: 0.2,
+    borderRightColor: "#FE7D5E",
+    borderBottomWidth: 0.2,
+    borderBottomColor: "#FE7D5E",
     padding: 10,
     fontSize: 16
   }
