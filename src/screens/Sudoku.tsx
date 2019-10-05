@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -8,15 +8,18 @@ import CustomButton from "../components/CustomButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
+import SudokuContext from "./../scripts/sudokuContext";
 
 const Sudoku = () => {
+  const { dictionary } = useContext(SudokuContext);
   const boardRef = useRef(React.createRef());
   const [isStop, setStop] = useState(false);
 
   const _renderCenterItem = () => {
+    console.log(dictionary);
     return (
       <View>
-        <Text style={styles.title}>{"Судоку"}</Text>
+        <Text style={styles.title}>{dictionary.TITLE}</Text>
         <Timer
           stop={isStop}
           styleContent={{ marginTop: 20, alignItems: "center" }}
@@ -78,7 +81,7 @@ const Sudoku = () => {
               style={styles.customButton}
               onPress={() => boardRef.current.reloadBoard()}
             >
-              <Text style={styles.titleButton}>Reload</Text>
+              <Text style={styles.titleButton}>{dictionary.NEW_GAME}</Text>
             </CustomButton>
             <CustomButton
               underlay={theme.light.underlayPersik}
@@ -97,7 +100,7 @@ const Sudoku = () => {
               style={styles.customButton}
               onPress={() => _setNumber(0)}
             >
-              <Text style={styles.titleButton}>Eraser</Text>
+              <Text style={styles.titleButton}>{dictionary.ERASER}</Text>
             </CustomButton>
           </View>
         </View>
@@ -127,8 +130,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15
   },
   customButton: {
-    height: 50,
-    width: 70,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
     justifyContent: "center",
     backgroundColor: theme.light.white,
     borderWidth: 1,
