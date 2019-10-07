@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleProp, ViewStyle, TextStyle } from "react-native";
+import { View, Text } from "react-native";
 import useInterval from "../scripts/customHooks";
+import theme from "./../shared/Constants";
 
 interface ITimer {
-  styleContent?: StyleProp<ViewStyle | TextStyle>;
-  styleText?: StyleProp<ViewStyle | TextStyle>;
   stop: boolean;
 }
 
-const Timer = ({styleContent, styleText, stop}: ITimer) => {
+const Timer = ({ stop }: ITimer) => {
   const [secondsCounter, setSecond] = useState("00");
   const [minutesCounter, setMinute] = useState("00");
 
@@ -26,8 +25,10 @@ const Timer = ({styleContent, styleText, stop}: ITimer) => {
   }, 1000);
 
   return (
-    <View style={styleContent}>
-      <Text style={styleText}>{`${minutesCounter}:${secondsCounter}`}</Text>
+    <View>
+      <Text
+        style={{ color: theme.light.white, fontSize: 20 }}
+      >{`${minutesCounter}:${secondsCounter}`}</Text>
     </View>
   );
 };

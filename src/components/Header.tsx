@@ -2,74 +2,53 @@ import React from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
 
 interface IHeader {
-  leftItem?: React.ReactNode;
-  rightItem?: React.ReactNode;
-  centerItem: React.ReactNode;
+  leftItem?: JSX.Element;
+  rightItem?: JSX.Element;
+  centerItem?: JSX.Element;
 }
 
-const CustomHeader = ({ leftItem, rightItem, centerItem }: IHeader) => {
-  const _renderLeftItem = () => {
-    return (
-      <View style={styles.leftItem}>
-        {leftItem}
-      </View>
-    );
-  };
-
-  const _renderCenterItem = () => {
-    return (
-      <View style={styles.centerItem}>
-        {centerItem}
-      </View>
-    );
-  };
-
-  const _renderRightItem = () => {
-    return (
-      <View style={styles.rightItem}>
-        {rightItem}
-      </View>
-    );
-  };
-
-  return (
-    <View style={styles.header}>
-      <View style={styles.body}>
-        {leftItem ? _renderLeftItem() : null}
-        {centerItem ? _renderCenterItem() : null}
-        {rightItem ? _renderRightItem() : null}
+const CustomHeader = ({ leftItem, rightItem, centerItem }: IHeader) => (
+  <View style={_styles.container}>
+    <View style={_styles.menuContainer}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flex: 1, alignItems: "flex-start", marginLeft: 10 }}>
+          {leftItem}
+        </View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          {centerItem}
+        </View>
+        <View style={{ flex: 1, alignItems: "flex-end", marginRight: 10 }}>
+          {rightItem}
+        </View>
       </View>
     </View>
-  );
-};
+  </View>
+);
 
-const styles = StyleSheet.create({
-  header: {
-    height: 200,
-  },
-  body: {
-    flexDirection: "row",
+const _styles = StyleSheet.create({
+  container: {
     marginTop: StatusBar.currentHeight,
+    alignItems: "center"
   },
-  leftItem: {
-    color: "#FFF7EF",
-    flex: 1,
-    alignItems: "flex-start",
-    marginLeft: 10
-    // justifyContent: "flex-start",
+  menuContainer: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center"
   },
-  rightItem: {
-    color: "#FFF7EF",
+  titleContainer: {
     flex: 1,
-    alignItems: "flex-end",
-    marginRight: 10
-    // justifyContent: "flex-end",
+    alignItems: "center"
   },
-  centerItem: {
-    flex: 1,
-    alignItems: "center",
-    textAlign: "center",
-    // justifyContent: "center",
+  title: {
+    fontSize: 18,
+    fontWeight: "600"
   }
 });
 

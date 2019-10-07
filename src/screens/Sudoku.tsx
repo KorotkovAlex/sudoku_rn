@@ -15,29 +15,40 @@ const Sudoku = () => {
   const boardRef = useRef(React.createRef());
   const [isStop, setStop] = useState(false);
 
-  const _renderCenterItem = () => {
-    console.log(dictionary);
+  const _renderLeftItem = () => {
     return (
-      <View style={styles.viewCenter}>
-        <Timer
-          stop={isStop}
-          styleContent={{ alignItems: "center" }}
-          styleText={styles.timer}
-        />
+      <>
         <CustomButton
           underlay={theme.light.underlayPersik}
-          style={styles.playPauseButton}
+          onPress={() => boardRef.current.reloadBoard()}
+        >
+          <Text style={styles.titleButton}>{dictionary.NEW_GAME}</Text>
+        </CustomButton>
+      </>
+    );
+  };
+
+  const _renderCenterItem = () => {
+    return (
+      <>
+        <Timer stop={isStop} />
+        <CustomButton
+          underlay={theme.light.underlayPersik}
           onPress={_startStopTimer}
         >
           <Icon
             style={styles.iconAdd}
             name={isStop ? "play-arrow" : "pause"}
-            size={18}
+            size={20}
             color={theme.light.white}
           />
         </CustomButton>
-      </View>
+      </>
     );
+  };
+
+  const _renderRightItem = () => {
+    return <View />;
   };
 
   const _startStopTimer = () => {
@@ -57,7 +68,11 @@ const Sudoku = () => {
           colors={theme.light.linear_gradient}
           style={{ flex: 1 }}
         >
-          <CustomHeader centerItem={_renderCenterItem()} />
+          <CustomHeader
+            leftItem={_renderLeftItem()}
+            centerItem={_renderCenterItem()}
+            rightItem={_renderRightItem()}
+          />
         </LinearGradient>
         <View style={{ flex: 2 }} />
       </View>
@@ -90,13 +105,6 @@ const Sudoku = () => {
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
-              onPress={() => boardRef.current.reloadBoard()}
-            >
-              <Text style={styles.titleButton}>{dictionary.NEW_GAME}</Text>
-            </CustomButton>
-            <CustomButton
-              underlay={theme.light.underlayPersik}
-              style={styles.customButton}
               onPress={() => _setNumber(0)}
             >
               <Text style={styles.titleButton}>{dictionary.ERASER}</Text>
@@ -117,10 +125,13 @@ const styles = StyleSheet.create({
   viewButton: {
     flex: 1
   },
+  viewLeft: {
+    // justifyContent: "center",
+    // alignItems: "center",
+    marginTop: 10
+  },
   viewCenter: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
     marginTop: 10
   },
   playPauseButton: {
@@ -129,29 +140,20 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   customButton: {
-    paddingHorizontal: 5,
-    paddingVertical: 10,
     justifyContent: "center",
-    backgroundColor: theme.light.white,
-    borderWidth: 1,
-    borderColor: theme.light.persik,
-    marginTop: 20,
+    alignItems: "center",
     borderRadius: 10
   },
   titleButton: {
     textAlign: "center",
     fontSize: 16,
-    color: theme.light.persik
+    color: theme.light.white
   },
   iconAdd: {
     textAlign: "center"
   },
   title: {
     color: theme.light.white,
-    fontSize: 18
-  },
-  timer: {
-    color: theme.light.white,
-    fontSize: 24
+    fontSize: 16
   }
 });
