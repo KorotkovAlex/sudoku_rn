@@ -18,13 +18,24 @@ const Sudoku = () => {
   const _renderCenterItem = () => {
     console.log(dictionary);
     return (
-      <View>
-        <Text style={styles.title}>{dictionary.TITLE}</Text>
+      <View style={styles.viewCenter}>
         <Timer
           stop={isStop}
-          styleContent={{ marginTop: 20, alignItems: "center" }}
+          styleContent={{ alignItems: "center" }}
           styleText={styles.timer}
         />
+        <CustomButton
+          underlay={theme.light.underlayPersik}
+          style={styles.playPauseButton}
+          onPress={_startStopTimer}
+        >
+          <Icon
+            style={styles.iconAdd}
+            name={isStop ? "play-arrow" : "pause"}
+            size={18}
+            color={theme.light.white}
+          />
+        </CustomButton>
       </View>
     );
   };
@@ -85,18 +96,6 @@ const Sudoku = () => {
             </CustomButton>
             <CustomButton
               underlay={theme.light.underlayPersik}
-              style={styles.playPauseButton}
-              onPress={_startStopTimer}
-            >
-              <Icon
-                style={styles.iconAdd}
-                name={isStop ? "play-arrow" : "pause"}
-                size={30}
-                color={theme.light.persik}
-              />
-            </CustomButton>
-            <CustomButton
-              underlay={theme.light.underlayPersik}
               style={styles.customButton}
               onPress={() => _setNumber(0)}
             >
@@ -118,16 +117,16 @@ const styles = StyleSheet.create({
   viewButton: {
     flex: 1
   },
-  playPauseButton: {
-    height: 60,
-    width: 60,
+  viewCenter: {
+    flexDirection: "row",
     justifyContent: "center",
-    borderRadius: 30,
-    backgroundColor: theme.light.white,
-    borderWidth: 1,
-    borderColor: theme.light.persik,
-    marginTop: 20,
-    marginHorizontal: 15
+    alignItems: "center",
+    marginTop: 10
+  },
+  playPauseButton: {
+    justifyContent: "center",
+    marginHorizontal: 5,
+    borderRadius: 100
   },
   customButton: {
     paddingHorizontal: 5,
@@ -145,7 +144,6 @@ const styles = StyleSheet.create({
     color: theme.light.persik
   },
   iconAdd: {
-    color: theme.light.persik,
     textAlign: "center"
   },
   title: {

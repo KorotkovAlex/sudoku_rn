@@ -18,7 +18,7 @@ interface IButton {
 }
 
 const CustomButton = ({
-  bgroundColor = "blue",
+  bgroundColor,
   style,
   onPress,
   children,
