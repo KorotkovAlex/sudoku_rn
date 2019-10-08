@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -20,7 +20,25 @@ const Sudoku = () => {
       <>
         <CustomButton
           underlay={theme.light.underlayPersik}
-          onPress={() => boardRef.current.reloadBoard()}
+          onPress={() => {
+            Alert.alert(
+              dictionary.ALERT.WARNING_TITLE,
+              dictionary.ALERT.WARNING_MESSAGE_NEW_GAME,
+              [
+                {
+                  text: dictionary.ALERT.CANCEL,
+                  onPress: () => console.log("Cancel")
+                },
+                {
+                  text: dictionary.ALERT.OK,
+                  onPress: () => {
+                    boardRef.current.reloadBoard();
+                  }
+                }
+              ],
+              { cancelable: true }
+            );
+          }}
         >
           <Text style={styles.titleButton}>{dictionary.NEW_GAME}</Text>
         </CustomButton>

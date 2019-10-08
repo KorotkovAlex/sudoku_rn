@@ -1,5 +1,11 @@
 {
   "TITLE": "Судоку",
   "NEW_GAME": "Новая игра",
-  "ERASER": "Стереть"
+  "ERASER": "Стереть",
+  "ALERT": {
+    "WARNING_TITLE": "Предупреждение",
+    "WARNING_MESSAGE_NEW_GAME": "Вы хотите начать новуй игру?",
+    "CANCEL": "Закрыть",
+    "OK": "ОК"
+  }
 }

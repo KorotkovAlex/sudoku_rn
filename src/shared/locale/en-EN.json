@@ -1,5 +1,11 @@
 {
   "TITLE": "Sudoku",
   "NEW_GAME": "New game",
-  "ERASER": "Eraser"
+  "ERASER": "Eraser",
+  "ALERT": {
+    "WARNING_TITLE": "Warning",
+    "WARNING_MESSAGE_NEW_GAME": "Do you want to start a new game?",
+    "CANCEL": "Cancel",
+    "OK": "OK"
+  }
 }
