@@ -5,7 +5,6 @@ import {
   TextStyle,
   NativeSyntheticEvent,
   NativeTouchEvent,
-  StyleSheet,
   TouchableHighlight
 } from "react-native";
 
@@ -18,7 +17,7 @@ interface IButton {
 }
 
 const CustomButton = ({
-  bgroundColor = "blue",
+  bgroundColor,
   style,
   onPress,
   children,
@@ -27,7 +26,7 @@ const CustomButton = ({
   return (
     <TouchableHighlight
       onPress={onPress}
-      style={[styles.btnClickContain, { backgroundColor: bgroundColor }, style]}
+      style={[{ backgroundColor: bgroundColor }, style]}
       underlayColor={underlay}
     >
       {children}
@@ -36,29 +35,3 @@ const CustomButton = ({
 };
 
 export default CustomButton;
-
-const styles = StyleSheet.create({
-  btnClickContain: {
-    // flex: 1,
-    // flexDirection: "row",
-    // justifyContent: "center",
-    // alignItems: "stretch",
-    // alignSelf: "stretch",
-    // borderRadius: 5,
-    padding: 5,
-    marginTop: 5
-    // marginBottom: 5,
-    // height: 50,
-    // width: 50
-  },
-  btnContainer: {
-    // flex: 1,
-    // flexDirection: "row",
-    // justifyContent: "center",
-    // alignItems: "stretch",
-    // alignSelf: "stretch",
-    // borderRadius: 10,
-    // height: 50,
-    // width: 50
-  }
-});
