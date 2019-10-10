@@ -13,6 +13,7 @@ import SudokuContext from "./../scripts/sudokuContext";
 const Sudoku = () => {
   const { dictionary } = useContext(SudokuContext);
   const boardRef = useRef(React.createRef());
+  const timerRef = useRef(React.createRef());
   const [isStop, setStop] = useState(false);
 
   const _renderLeftItem = () => {
@@ -33,6 +34,7 @@ const Sudoku = () => {
                   text: dictionary.ALERT.OK,
                   onPress: () => {
                     boardRef.current.reloadBoard();
+                    timerRef.current.resetTimer();
                   }
                 }
               ],
@@ -49,7 +51,7 @@ const Sudoku = () => {
   const _renderCenterItem = () => {
     return (
       <>
-        <Timer stop={isStop} />
+        <Timer stop={isStop} ref={timerRef} />
         <CustomButton
           underlay={theme.light.underlayPersik}
           onPress={_startStopTimer}
@@ -83,6 +85,7 @@ const Sudoku = () => {
         text: dictionary.ALERT.OK,
         onPress: () => {
           boardRef.current.reloadBoard();
+          timerRef.current.resetTimer();
         }
       }
     ]);

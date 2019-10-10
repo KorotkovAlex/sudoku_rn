@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle, forwardRef } from "react";
 import { View, Text } from "react-native";
 import useInterval from "../scripts/customHooks";
 import theme from "./../shared/Constants";
@@ -7,9 +7,16 @@ interface ITimer {
   stop: boolean;
 }
 
-const Timer = ({ stop }: ITimer) => {
+const Timer = forwardRef(({ stop }: ITimer, ref) => {
   const [secondsCounter, setSecond] = useState("00");
   const [minutesCounter, setMinute] = useState("00");
+
+  useImperativeHandle(ref, () => ({
+    resetTimer() {
+      setSecond("00");
+      setMinute("00");
+    }
+  }));
 
   useInterval(() => {
     if (!stop) {
@@ -31,6 +38,6 @@ const Timer = ({ stop }: ITimer) => {
       >{`${minutesCounter}:${secondsCounter}`}</Text>
     </View>
   );
-};
+});
 
 export default Timer;
