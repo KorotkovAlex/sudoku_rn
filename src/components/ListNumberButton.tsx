@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  NativeSyntheticEvent,
-  NativeTouchEvent,
-  FlatList,
-  View
-} from "react-native";
+import { Text, StyleSheet, FlatList, View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import CustomButton from "./CustomButton";
 import theme from "../shared/Constants";
 
@@ -16,7 +11,7 @@ interface INumberButton {
 }
 
 const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
-  const numberData = [[1, 2, 3, 4, 5], [6, 7, 8, 9]];
+  const numberData = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 0]];
 
   return (
     <FlatList
@@ -29,7 +24,7 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
               key={i}
               style={{
                 marginHorizontal: 8,
-                marginVertical: 2
+                marginVertical: 5
               }}
             >
               <CustomButton
@@ -38,7 +33,11 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
                 onPress={() => onPress(cell)}
                 underlay={underlayNB}
               >
-                <Text style={styles.textCell}>{cell}</Text>
+                {cell === 0 ? (
+                  <Icon name="eraser" size={20} color={theme.light.black} />
+                ) : (
+                  <Text style={styles.textCell}>{cell}</Text>
+                )}
               </CustomButton>
             </View>
           );
