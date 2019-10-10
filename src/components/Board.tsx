@@ -10,7 +10,10 @@ import Cell from "./Cell";
 
 import { getFullBoard, CellType } from "../scripts/sudokuGenerator";
 
+let counter = 0;
+
 const Board = forwardRef(({}, ref) => {
+  const amountDeleteDigit = 5;
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
   const [fullBoard, setFullBoard] = useState(Array<CellType[]>());
   const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
@@ -19,7 +22,7 @@ const Board = forwardRef(({}, ref) => {
   const [userBoard, setUserBoard] = useState(Array<CellType[]>());
 
   const _settingBoard = () => {
-    const board = getFullBoard();
+    const board = getFullBoard({ amountDeleteDigit });
 
     setFullBoard(board.fillSudoku);
     setWithoutDigitsBoard(board.withoutDigitsSudoku);
@@ -37,6 +40,20 @@ const Board = forwardRef(({}, ref) => {
     _settingBoard();
   }, []);
 
+  const _checkOnFill = () => {
+    let isFillBoard = true;
+    fullBoard.some((row, indexOfRow) => {
+      row.some((cell, indexOfCell) => {
+        if (cell.digit !== userBoard[indexOfRow][indexOfCell].digit) {
+          isFillBoard = false;
+          return true;
+        }
+      });
+    });
+
+    return isFillBoard;
+  };
+
   useImperativeHandle(ref, () => ({
     setNumber(digit: number) {
       const { row, column } = currentCell;
@@ -45,8 +62,18 @@ const Board = forwardRef(({}, ref) => {
       }
 
       let newUserBoard = [...userBoard];
+
+      if (newUserBoard[column][row].digit === 0) {
+        counter = counter + 1;
+      }
+
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+
+      if (counter === amountDeleteDigit) {
+        const isFill = _checkOnFill();
+        alert(isFill);
+      }
     },
 
     reloadBoard() {

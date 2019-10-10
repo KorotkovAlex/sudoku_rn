@@ -145,11 +145,15 @@ function create() {
   }
 }
 
-export const getFullBoard = () => {
+export const getFullBoard = ({
+  amountDeleteDigit
+}: {
+  amountDeleteDigit: number;
+}) => {
   mat = [];
   fillSudoku = [];
   N = 9;
-  K = 40;
+  K = amountDeleteDigit;
   let SRNd = Math.sqrt(N);
   SRN = SRNd;
 

@@ -16,7 +16,7 @@ const Sudoku = () => {
   const _renderCenterItem = () => {
     return (
       <View>
-        <Text style={styles.title}>{"Судоку"}</Text>
+        <Text style={styles.title}>{"Sudoku"}</Text>
         <Timer
           stop={isStop}
           styleContent={{ marginTop: 20, alignItems: "center" }}
