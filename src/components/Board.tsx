@@ -13,7 +13,7 @@ import { getFullBoard, CellType } from "../scripts/sudokuGenerator";
 let counter = 0;
 
 const Board = forwardRef(({}, ref) => {
-  const amountDeleteDigit = 5;
+  const amountDeleteDigit = 30;
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
   const [fullBoard, setFullBoard] = useState(Array<CellType[]>());
   const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
@@ -27,6 +27,8 @@ const Board = forwardRef(({}, ref) => {
     setFullBoard(board.fillSudoku);
     setWithoutDigitsBoard(board.withoutDigitsSudoku);
     setUserBoard(board.withoutDigitsSudoku);
+
+    console.log("fullBoard", board.fillSudoku);
   };
 
   const _cleanCurrentCell = () => {
@@ -42,6 +44,7 @@ const Board = forwardRef(({}, ref) => {
 
   const _checkOnFill = () => {
     let isFillBoard = true;
+    console.log("userBoard", userBoard);
     fullBoard.some((row, indexOfRow) => {
       row.some((cell, indexOfCell) => {
         if (cell.digit !== userBoard[indexOfRow][indexOfCell].digit) {

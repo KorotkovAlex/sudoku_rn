@@ -114,16 +114,12 @@ function fillRemaining(c: number, k: number) {
 function removeKDigits() {
   let count = K;
   while (count !== 0) {
-    let cellId = randomGenerator(N * N);
+    let cellId = randomGenerator(N * (N - 1));
     let i = Math.round(cellId / N);
 
-    if (i === 9) {
-      i = i - 1;
-    }
-
     let j = cellId % 9;
-    if (j !== 0) j = j - 1;
-
+    // if (j !== 0) j = j - 1;
+    // if (i !== 0) i = i - 1;
     if (mat[i][j].digit !== 0) {
       count--;
       mat[i][j].digit = 0;
