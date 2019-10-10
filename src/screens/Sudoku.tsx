@@ -40,7 +40,7 @@ const Sudoku = () => {
             );
           }}
         >
-          <Text style={styles.titleButton}>{dictionary.NEW_GAME}</Text>
+          <Text style={styles.newGameTitle}>{dictionary.NEW_GAME}</Text>
         </CustomButton>
       </>
     );
@@ -77,6 +77,30 @@ const Sudoku = () => {
     boardRef.current.setNumber(cell);
   };
 
+  const _congratulateUser = () => {
+    Alert.alert(dictionary.ALERT.CONGRATULATE, dictionary.ALERT.YOU_ARE_WIN, [
+      {
+        text: dictionary.ALERT.OK,
+        onPress: () => {
+          boardRef.current.reloadBoard();
+        }
+      }
+    ]);
+  };
+
+  const _showError = () => {
+    Alert.alert(
+      dictionary.ALERT.UNFORTUNATELY,
+      dictionary.ALERT.HAVE_NOT_SOLVED,
+      [
+        {
+          text: dictionary.ALERT.OK,
+          onPress: () => {}
+        }
+      ],
+      { cancelable: true }
+    );
+  };
   return (
     <>
       <View style={{ flex: 1 }}>
@@ -104,7 +128,7 @@ const Sudoku = () => {
           right: 0
         }}
       >
-        <View style={[styles.view, { paddingTop: 150 }]}>
+        <View style={[styles.view, { paddingTop: 125 }]}>
           <Board ref={boardRef} />
           <View style={styles.viewButton}>
             <ListNumberButtons
@@ -115,7 +139,7 @@ const Sudoku = () => {
           <View
             style={{
               flex: 1,
-              alignItems: "center",
+              alignItems: "flex-start",
               justifyContent: "center",
               flexDirection: "row"
             }}
@@ -123,9 +147,16 @@ const Sudoku = () => {
             <CustomButton
               underlay={theme.light.underlayPersik}
               style={styles.customButton}
-              onPress={() => _setNumber(0)}
+              onPress={() => {
+                const isEnd = boardRef.current.checkBoard();
+                if (isEnd) {
+                  _congratulateUser();
+                } else {
+                  _showError();
+                }
+              }}
             >
-              <Text style={styles.titleButton}>{dictionary.ERASER}</Text>
+              <Text style={styles.titleButton}>{dictionary.END_GAME}</Text>
             </CustomButton>
           </View>
         </View>
@@ -162,10 +193,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10
   },
-  titleButton: {
+  newGameTitle: {
     textAlign: "center",
     fontSize: 16,
     color: theme.light.white
+  },
+  titleButton: {
+    textAlign: "center",
+    fontSize: 16,
+    color: theme.light.persik
   },
   iconAdd: {
     textAlign: "center"

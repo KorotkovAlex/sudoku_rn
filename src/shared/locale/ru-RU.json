@@ -2,10 +2,15 @@
   "TITLE": "Судоку",
   "NEW_GAME": "Новая игра",
   "ERASER": "Стереть",
+  "END_GAME": "Закончить игру",
   "ALERT": {
     "WARNING_TITLE": "Предупреждение",
     "WARNING_MESSAGE_NEW_GAME": "Вы хотите начать новуй игру?",
     "CANCEL": "Закрыть",
-    "OK": "ОК"
+    "OK": "ОК",
+    "CONGRATULATE": "Поздравлю! Вы решили Судоку.",
+    "YOU_ARE_WIN": "Нажмите OK, что бы начать новую игру.",
+    "UNFORTUNATELY": "Увы :(",
+    "HAVE_NOT_SOLVED": "Но Судоку решено не верно."
   }
 }

@@ -2,10 +2,15 @@
   "TITLE": "Sudoku",
   "NEW_GAME": "New game",
   "ERASER": "Eraser",
+  "END_GAME": "End game",
   "ALERT": {
     "WARNING_TITLE": "Warning",
     "WARNING_MESSAGE_NEW_GAME": "Do you want to start a new game?",
     "CANCEL": "Cancel",
-    "OK": "OK"
+    "OK": "OK",
+    "CONGRATULATE": "Congratulate! You have solved Sudoku.",
+    "YOU_ARE_WIN": "Press OK for starting new game.",
+    "UNFORTUNATELY": "Unfortunately :(",
+    "HAVE_NOT_SOLVED": "You have not solved Sudoku."
   }
 }

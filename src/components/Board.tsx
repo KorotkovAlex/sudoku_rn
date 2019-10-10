@@ -69,11 +69,10 @@ const Board = forwardRef(({}, ref) => {
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+    },
 
-      if (counter === amountDeleteDigit) {
-        const isFill = _checkOnFill();
-        alert(isFill);
-      }
+    checkBoard() {
+      return _checkOnFill();
     },
 
     reloadBoard() {
