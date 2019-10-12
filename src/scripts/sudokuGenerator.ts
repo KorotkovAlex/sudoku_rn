@@ -116,10 +116,8 @@ function removeKDigits() {
   while (count !== 0) {
     let cellId = randomGenerator(N * (N - 1));
     let i = Math.round(cellId / N);
-
     let j = cellId % 9;
-    // if (j !== 0) j = j - 1;
-    // if (i !== 0) i = i - 1;
+
     if (mat[i][j].digit !== 0) {
       count--;
       mat[i][j].digit = 0;
