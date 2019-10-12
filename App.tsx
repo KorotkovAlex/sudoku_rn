@@ -13,7 +13,6 @@ const dictionary = getDictionaryByLanguage(locale);
 
 const App = () => {
   useEffect(() => {
-    console.log("hide");
     SplashScreen.hide();
   }, []);
 
