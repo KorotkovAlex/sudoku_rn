@@ -4,8 +4,8 @@ import React, {
   forwardRef,
   useImperativeHandle
 } from "react";
-import { FlatList, View, StyleSheet } from "react-native";
-
+import { FlatList, View, StyleSheet, Text } from "react-native";
+import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
 
 import { getFullBoard, CellType } from "../scripts/sudokuGenerator";
@@ -16,16 +16,12 @@ const Board = forwardRef(({}, ref) => {
   const amountDeleteDigit = 30;
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
   const [fullBoard, setFullBoard] = useState(Array<CellType[]>());
-  const [withoutDigitsBoard, setWithoutDigitsBoard] = useState(
-    Array<CellType[]>()
-  );
   const [userBoard, setUserBoard] = useState(Array<CellType[]>());
 
   const _settingBoard = () => {
     const board = getFullBoard({ amountDeleteDigit });
 
     setFullBoard(board.fillSudoku);
-    setWithoutDigitsBoard(board.withoutDigitsSudoku);
     setUserBoard(board.withoutDigitsSudoku);
 
     console.log("fullBoard", board.fillSudoku);
@@ -191,42 +187,55 @@ const Board = forwardRef(({}, ref) => {
   };
 
   return (
-    <View
-      style={{
-        margin: 10
-      }}
-    >
-      <View style={_styles.sudokuContainer}>
-        <FlatList
-          data={userBoard}
-          renderItem={({ item, index }: { item: number; index: number }) => {
-            let border;
+    <SudokuConsumer>
+      {({ dimensions }) => (
+        <>
+          <View
+            style={{
+              width: dimensions.width - 20,
+              marginHorizontal: 10
+            }}
+          >
+            <View style={_styles.sudokuContainer}>
+              <FlatList
+                data={userBoard}
+                renderItem={({
+                  item,
+                  index
+                }: {
+                  item: number;
+                  index: number;
+                }) => {
+                  let border;
 
-            if (_isAddBoldBorder({ index })) {
-              border = _styles.boldBottomBorder;
-            }
-            let useBorder;
-            if (index === 8) {
-              useBorder = "BOTTOM";
-            }
-            if (index === 0) {
-              useBorder = "TOP";
-            }
+                  if (_isAddBoldBorder({ index })) {
+                    border = _styles.boldBottomBorder;
+                  }
+                  let useBorder;
+                  if (index === 8) {
+                    useBorder = "BOTTOM";
+                  }
+                  if (index === 0) {
+                    useBorder = "TOP";
+                  }
 
-            return (
-              <View style={{ flexDirection: "row", ...border }}>
-                {_renderRow({
-                  items: item,
-                  useBorder,
-                  columnNumber: index
-                })}
-              </View>
-            );
-          }}
-          keyExtractor={(_item: any, index: any) => index.toString()}
-        />
-      </View>
-    </View>
+                  return (
+                    <View style={{ flexDirection: "row", ...border }}>
+                      {_renderRow({
+                        items: item,
+                        useBorder,
+                        columnNumber: index
+                      })}
+                    </View>
+                  );
+                }}
+                keyExtractor={(_item: any, index: any) => index.toString()}
+              />
+            </View>
+          </View>
+        </>
+      )}
+    </SudokuConsumer>
   );
 });
 

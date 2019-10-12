@@ -1,5 +1,12 @@
 import React, { useState, useRef, useContext } from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  StatusBar
+} from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -8,7 +15,7 @@ import CustomButton from "../components/CustomButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
-import SudokuContext from "./../scripts/sudokuContext";
+import SudokuContext, { SudokuConsumer } from "./../scripts/sudokuContext";
 
 const Sudoku = () => {
   const { dictionary } = useContext(SudokuContext);
@@ -131,38 +138,58 @@ const Sudoku = () => {
           right: 0
         }}
       >
-        <View style={[styles.view, { paddingTop: 125 }]}>
-          <Board ref={boardRef} />
-          <View style={styles.viewButton}>
-            <ListNumberButtons
-              onPress={_setNumber}
-              underlayNB={theme.light.white}
-            />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "flex-start",
-              justifyContent: "center",
-              flexDirection: "row"
-            }}
-          >
-            <CustomButton
-              underlay={theme.light.underlayPersik}
-              style={styles.customButton}
-              onPress={() => {
-                const isEnd = boardRef.current.checkBoard();
-                if (isEnd) {
-                  _congratulateUser();
-                } else {
-                  _showError();
-                }
-              }}
-            >
-              <Text style={styles.titleButton}>{dictionary.END_GAME}</Text>
-            </CustomButton>
-          </View>
-        </View>
+        <ScrollView>
+          <SudokuConsumer>
+            {({ dimensions }) => (
+              <View
+                style={[
+                  styles.view,
+                  {
+                    paddingTop: dimensions.height * 0.14
+                  }
+                ]}
+              >
+                <Board ref={boardRef} />
+                <View style={[styles.viewButton, { marginTop: 5 }]}>
+                  <ListNumberButtons
+                    onPress={_setNumber}
+                    underlayNB={theme.light.white}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    flexDirection: "row"
+                  }}
+                >
+                  <CustomButton
+                    underlay={theme.light.underlayPersik}
+                    style={styles.customButton}
+                    onPress={() => {
+                      const isEnd = boardRef.current.checkBoard();
+                      if (isEnd) {
+                        _congratulateUser();
+                      } else {
+                        _showError();
+                      }
+                    }}
+                  >
+                    <Text
+                      style={[
+                        styles.titleButton,
+                        { fontSize: 16 * dimensions.baseWidth }
+                      ]}
+                    >
+                      {dictionary.END_GAME}
+                    </Text>
+                  </CustomButton>
+                </View>
+              </View>
+            )}
+          </SudokuConsumer>
+        </ScrollView>
       </View>
     </>
   );
@@ -178,8 +205,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   viewLeft: {
-    // justifyContent: "center",
-    // alignItems: "center",
     marginTop: 10
   },
   viewCenter: {
@@ -202,8 +227,8 @@ const styles = StyleSheet.create({
     color: theme.light.white
   },
   titleButton: {
+    marginTop: 5,
     textAlign: "center",
-    fontSize: 16,
     color: theme.light.persik
   },
   iconAdd: {

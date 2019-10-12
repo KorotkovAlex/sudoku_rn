@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, StyleSheet, FlatList, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { SudokuConsumer } from "../scripts/sudokuContext";
 
 import CustomButton from "./CustomButton";
 import theme from "../shared/Constants";
@@ -27,18 +28,26 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
                 marginVertical: 5
               }}
             >
-              <CustomButton
-                bgroundColor={"#fff"}
-                style={styles.buttonStyle}
-                onPress={() => onPress(cell)}
-                underlay={underlayNB}
-              >
-                {cell === 0 ? (
-                  <Icon name="eraser" size={20} color={theme.light.black} />
-                ) : (
-                  <Text style={styles.textCell}>{cell}</Text>
+              <SudokuConsumer>
+                {({ dimensions }) => (
+                  <CustomButton
+                    bgroundColor={"#fff"}
+                    style={{
+                      ...styles.buttonStyle,
+                      width: dimensions.baseWidth * 40,
+                      height: dimensions.baseWidth * 40
+                    }}
+                    onPress={() => onPress(cell)}
+                    underlay={underlayNB}
+                  >
+                    {cell === 0 ? (
+                      <Icon name="eraser" size={20} color={theme.light.black} />
+                    ) : (
+                      <Text style={styles.textCell}>{cell}</Text>
+                    )}
+                  </CustomButton>
                 )}
-              </CustomButton>
+              </SudokuConsumer>
             </View>
           );
         });
@@ -56,8 +65,6 @@ export default ListNumberButtons;
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    height: 45,
-    width: 45,
     backgroundColor: "#FFF",
     justifyContent: "center",
     alignItems: "center",
