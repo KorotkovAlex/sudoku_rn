@@ -31,7 +31,7 @@ const CustomModal = ({
     return (
       <View
         style={{
-          flex: 1,
+          // flex: 1,
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between"
@@ -39,7 +39,7 @@ const CustomModal = ({
       >
         {isButtonCancel ? (
           <CustomButton
-            style={{ padding: 5, borderRadius: 5 }}
+            style={{ paddingVertical: 5, borderRadius: 5 }}
             underlay={theme.light.underlayPersik}
             onPress={onPressCancel}
           >
@@ -50,7 +50,7 @@ const CustomModal = ({
         )}
         {isButtonOk ? (
           <CustomButton
-            style={{ padding: 5, borderRadius: 5 }}
+            style={{ paddingVertical: 5, borderRadius: 5 }}
             underlay={theme.light.underlayPersik}
             onPress={onPressOk}
           >
@@ -68,19 +68,20 @@ const CustomModal = ({
       <View
         style={{
           backgroundColor: "#fff",
-          minHeight: 300,
-          minWidth: 300,
-          maxHeight: "80%",
-          maxWidth: "80%",
+          // minHeight: 300,
+          // minWidth: 300,
+          // maxHeight: "80%",
+          // maxWidth: "80%",
+          paddingVertical: 10,
           borderRadius: 12,
           justifyContent: "center",
-          paddingHorizontal: 15
+          paddingHorizontal: 20
         }}
       >
         {title && (
           <Text
             style={{
-              flex: 1,
+              // flex: 1,
               textAlign: "center",
               marginVertical: 5,
               fontSize: 18
@@ -92,8 +93,8 @@ const CustomModal = ({
         {body && (
           <View
             style={{
-              marginBottom: 5,
-              flex: 3
+              marginVertical: 15
+              // flex: 3
             }}
           >
             {body}

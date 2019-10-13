@@ -186,39 +186,99 @@ const Sudoku = () => {
   };
 
   const _renderListLevel = () => {
+    const mass = [
+      { title: "Легкий", amount: 30 },
+      { title: "Средний", amount: 35 },
+      { title: "Сложный", amount: 40 }
+    ];
     return (
-      <FlatList
-        data={[
-          { title: "Легкий", amount: 30 },
-          { title: "Средний", amount: 35 },
-          { title: "Сложный", amount: 40 }
-        ]}
-        style={{ zIndex: 20 }}
-        renderItem={({ item }) => {
-          return (
-            <TouchableHighlight
-              underlayColor={theme.light.underlayPersik}
-              style={{
-                paddingVertical: 15,
-                borderRadius: 5,
-                marginBottom: 5
-              }}
-              onPress={() => {
-                setAmountDeleteDigit(item.amount);
-                setIsVisibleModal(false);
-                let br: any = boardRef;
-                br.current.reloadBoard(item.amount);
-                let tr: any = timerRef;
-                tr.current.resetTimer();
-                setStop(false);
-              }}
-            >
-              <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
-            </TouchableHighlight>
-          );
-        }}
-        keyExtractor={(_item, index) => index.toString()}
-      />
+      <>
+        <TouchableHighlight
+          underlayColor={theme.light.underlayPersik}
+          style={{
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginBottom: 5
+          }}
+          onPress={() => {
+            setAmountDeleteDigit(mass[0].amount);
+            setIsVisibleModal(false);
+            let br: any = boardRef;
+            br.current.reloadBoard(mass[0].amount);
+            let tr: any = timerRef;
+            tr.current.resetTimer();
+            setStop(false);
+          }}
+        >
+          <Text style={{ paddingLeft: 5 }}>{mass[1].title}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor={theme.light.underlayPersik}
+          style={{
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginBottom: 5
+          }}
+          onPress={() => {
+            setAmountDeleteDigit(mass[1].amount);
+            setIsVisibleModal(false);
+            let br: any = boardRef;
+            br.current.reloadBoard(mass[1].amount);
+            let tr: any = timerRef;
+            tr.current.resetTimer();
+            setStop(false);
+          }}
+        >
+          <Text style={{ paddingLeft: 5 }}>{mass[2].title}</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor={theme.light.underlayPersik}
+          style={{
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginBottom: 5
+          }}
+          onPress={() => {
+            setAmountDeleteDigit(mass[2].amount);
+            setIsVisibleModal(false);
+            let br: any = boardRef;
+            br.current.reloadBoard(mass[2].amount);
+            let tr: any = timerRef;
+            tr.current.resetTimer();
+            setStop(false);
+          }}
+        >
+          <Text style={{ paddingLeft: 5 }}>{mass[0].title}</Text>
+        </TouchableHighlight>
+      </>
+      // <FlatList
+      //   data={}
+      //   style={{ zIndex: 20 }}
+      //   renderItem={({ item }) => {
+      //     return (
+      //       <TouchableHighlight
+      //         underlayColor={theme.light.underlayPersik}
+      //         style={{
+      //           paddingVertical: 15,
+      //           borderRadius: 5,
+      //           marginBottom: 5
+      //         }}
+      //         onPress={() => {
+      //           setAmountDeleteDigit(item.amount);
+      //           setIsVisibleModal(false);
+      //           let br: any = boardRef;
+      //           br.current.reloadBoard(item.amount);
+      //           let tr: any = timerRef;
+      //           tr.current.resetTimer();
+      //           setStop(false);
+      //         }}
+      //       >
+      //         <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
+      //       </TouchableHighlight>
+      //     );
+      //   }}
+      //   keyExtractor={(_item, index) => index.toString()}
+      // />
     );
   };
 
