@@ -23,8 +23,6 @@ const Board = forwardRef(({}, ref) => {
 
     setFullBoard(board.fillSudoku);
     setUserBoard(board.withoutDigitsSudoku);
-
-    console.log("fullBoard", board.fillSudoku);
   };
 
   const _cleanCurrentCell = () => {
@@ -40,7 +38,6 @@ const Board = forwardRef(({}, ref) => {
 
   const _checkOnFill = () => {
     let isFillBoard = true;
-    console.log("userBoard", userBoard);
     fullBoard.some((row, indexOfRow) => {
       row.some((cell, indexOfCell) => {
         if (cell.digit !== userBoard[indexOfRow][indexOfCell].digit) {
