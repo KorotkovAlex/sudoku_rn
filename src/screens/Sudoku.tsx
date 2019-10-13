@@ -5,7 +5,8 @@ import {
   Text,
   Alert,
   ScrollView,
-  StatusBar
+  FlatList,
+  TouchableHighlight
 } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -16,62 +17,139 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
 import SudokuContext, { SudokuConsumer } from "./../scripts/sudokuContext";
+import CustomModal from "../components/CustomModal";
+
+interface IShowModal {
+  title: string;
+  body: JSX.Element;
+  isButtonCancel: boolean;
+  isButtonOk: boolean;
+  onPressCancel?: any;
+  onPressOk?: any;
+}
 
 const Sudoku = () => {
   const { dictionary } = useContext(SudokuContext);
   const boardRef = useRef(React.createRef());
   const timerRef = useRef(React.createRef());
+
   const [isStop, setStop] = useState(false);
+
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [isButtonOkModal, setIsButtonOkModal] = useState(false);
+  const [isButtonCancelModal, setIsButtonCancelModal] = useState(false);
+  const [titleModal, setTitleModal] = useState("Title");
+  const [bodyModal, setBodyModal] = useState(<></>);
+
+  const [onPressOkModal, setOnPressOkModal] = useState();
+  const [onPressCancelModal, setOnPressCancelModal] = useState();
+
+  const [amountDeleteDigit, setAmountDeleteDigit] = useState(30);
+
+  const _onPressBackdrop = () => {
+    setIsVisibleModal(false);
+  };
+
+  const reloadBoard = () => {
+    let br: any = boardRef;
+    br.current.reloadBoard(amountDeleteDigit);
+    let tr: any = timerRef;
+    tr.current.resetTimer();
+    _cancelModal();
+    setStop(false);
+  };
 
   const _renderLeftItem = () => {
     return (
-      <>
+      <View style={{ zIndex: 10 }}>
         <CustomButton
           underlay={theme.light.underlayPersik}
           onPress={() => {
-            Alert.alert(
-              dictionary.ALERT.WARNING_TITLE,
-              dictionary.ALERT.WARNING_MESSAGE_NEW_GAME,
-              [
-                {
-                  text: dictionary.ALERT.CANCEL,
-                  onPress: () => console.log("Cancel")
-                },
-                {
-                  text: dictionary.ALERT.OK,
-                  onPress: () => {
-                    boardRef.current.reloadBoard();
-                    timerRef.current.resetTimer();
-                  }
-                }
-              ],
-              { cancelable: true }
-            );
+            _showModal({
+              title: dictionary.ALERT.WARNING_TITLE,
+              body: <Text>{dictionary.ALERT.WARNING_MESSAGE_NEW_GAME}</Text>,
+              isButtonCancel: true,
+              isButtonOk: true,
+              onPressCancel: _cancelModal,
+              onPressOk: reloadBoard
+            });
           }}
         >
           <Text style={styles.newGameTitle}>{dictionary.NEW_GAME}</Text>
         </CustomButton>
-      </>
+      </View>
     );
   };
 
   const _renderCenterItem = () => {
     return (
       <>
-        <Timer stop={isStop} ref={timerRef} />
-        <CustomButton
-          underlay={theme.light.underlayPersik}
-          onPress={_startStopTimer}
+        <View
+          style={{
+            zIndex: 10,
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
         >
-          <Icon
-            style={styles.iconAdd}
-            name={isStop ? "play-arrow" : "pause"}
-            size={20}
-            color={theme.light.white}
-          />
-        </CustomButton>
+          <Timer stop={isStop} ref={timerRef} />
+          <CustomButton
+            style={{ justifyContent: "center" }}
+            underlay={theme.light.underlayPersik}
+            onPress={_startStopTimer}
+          >
+            <Icon
+              style={styles.iconAdd}
+              name={isStop ? "play-arrow" : "pause"}
+              size={20}
+              color={theme.light.white}
+            />
+          </CustomButton>
+        </View>
+        <View style={{ zIndex: 10, marginTop: 10 }}>
+          <CustomButton
+            onPress={() => {
+              _showModal({
+                title: "Выберите уровень",
+                body: _renderListLevel(),
+                isButtonCancel: true,
+                isButtonOk: false,
+                onPressCancel: _cancelModal
+              });
+            }}
+            underlay={theme.light.underlayPersik}
+          >
+            <Text style={styles.title}>Уровни</Text>
+          </CustomButton>
+        </View>
       </>
     );
+  };
+
+  const _showModal = ({
+    title,
+    body,
+    isButtonCancel,
+    isButtonOk,
+    onPressOk,
+    onPressCancel
+  }: IShowModal) => {
+    setTitleModal(title);
+    setBodyModal(body);
+    setIsButtonCancelModal(isButtonCancel);
+    setIsButtonOkModal(isButtonOk);
+    setOnPressOkModal({ func: onPressOk });
+    setOnPressCancelModal({ func: onPressCancel });
+    setIsVisibleModal(true);
+  };
+
+  const _cancelModal = () => {
+    setTitleModal("Title");
+    setBodyModal(<></>);
+    setIsButtonCancelModal(false);
+    setIsButtonOkModal(false);
+    setOnPressOkModal(null);
+    setOnPressCancelModal(null);
+    setIsVisibleModal(false);
   };
 
   const _renderRightItem = () => {
@@ -83,36 +161,83 @@ const Sudoku = () => {
   };
 
   const _setNumber = (cell: number) => {
-    boardRef.current.setNumber(cell);
+    let br: any = boardRef;
+    br.current.setNumber(cell);
   };
 
   const _congratulateUser = () => {
-    Alert.alert(dictionary.ALERT.CONGRATULATE, dictionary.ALERT.YOU_ARE_WIN, [
-      {
-        text: dictionary.ALERT.OK,
-        onPress: () => {
-          boardRef.current.reloadBoard();
-          timerRef.current.resetTimer();
-        }
-      }
-    ]);
+    _showModal({
+      title: dictionary.ALERT.CONGRATULATE,
+      body: <Text>{dictionary.ALERT.YOU_ARE_WIN}</Text>,
+      isButtonCancel: false,
+      isButtonOk: true,
+      onPressOk: reloadBoard
+    });
   };
 
   const _showError = () => {
-    Alert.alert(
-      dictionary.ALERT.UNFORTUNATELY,
-      dictionary.ALERT.HAVE_NOT_SOLVED,
-      [
-        {
-          text: dictionary.ALERT.OK,
-          onPress: () => {}
-        }
-      ],
-      { cancelable: true }
+    _showModal({
+      title: dictionary.ALERT.UNFORTUNATELY,
+      body: <Text>{dictionary.ALERT.HAVE_NOT_SOLVED}</Text>,
+      isButtonCancel: false,
+      isButtonOk: true,
+      onPressOk: _cancelModal
+    });
+  };
+
+  const _renderListLevel = () => {
+    return (
+      <FlatList
+        data={[
+          { title: "Легкий", amount: 30 },
+          { title: "Средний", amount: 35 },
+          { title: "Сложный", amount: 40 }
+        ]}
+        style={{ zIndex: 20 }}
+        renderItem={({ item }) => {
+          return (
+            <TouchableHighlight
+              underlayColor={theme.light.underlayPersik}
+              style={{
+                paddingVertical: 15,
+                borderRadius: 5,
+                marginBottom: 5
+              }}
+              onPress={() => {
+                setAmountDeleteDigit(item.amount);
+                setIsVisibleModal(false);
+                let br: any = boardRef;
+                br.current.reloadBoard(item.amount);
+                let tr: any = timerRef;
+                tr.current.resetTimer();
+                setStop(false);
+              }}
+            >
+              <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
+            </TouchableHighlight>
+          );
+        }}
+        keyExtractor={(_item, index) => index.toString()}
+      />
     );
   };
+
   return (
     <>
+      <CustomModal
+        title={titleModal}
+        body={bodyModal}
+        isVisible={isVisibleModal}
+        isButtonOk={isButtonOkModal}
+        isButtonCancel={isButtonCancelModal}
+        onPressBackdrop={_onPressBackdrop}
+        onPressOk={() => {
+          onPressOkModal.func();
+        }}
+        onPressCancel={() => {
+          onPressCancelModal.func();
+        }}
+      />
       <View style={{ flex: 1 }}>
         <LinearGradient
           start={{ x: 0, y: 0 }}
@@ -168,7 +293,8 @@ const Sudoku = () => {
                     underlay={theme.light.underlayPersik}
                     style={styles.customButton}
                     onPress={() => {
-                      const isEnd = boardRef.current.checkBoard();
+                      let br: any = boardRef;
+                      const isEnd = br.current.checkBoard();
                       if (isEnd) {
                         _congratulateUser();
                       } else {
