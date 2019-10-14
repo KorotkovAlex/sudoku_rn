@@ -16,6 +16,9 @@
   },
   "LEVEL": {
     "TITLE_BUTTON": "Levels",
+    "TITLE_BUTTON_EASY_LEVEL": "Easy",
+    "TITLE_BUTTON_AVERAGE_LEVEL": "Average",
+    "TITLE_BUTTON_DIFFICULT_LEVEL": "Difficult",
     "EASY_LEVEL": "Easy level",
     "AVERAGE_LEVEL": "Average level",
     "DIFFICULT_LEVEL": "Difficult level"

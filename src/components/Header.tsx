@@ -10,13 +10,13 @@ interface IHeader {
 const CustomHeader = ({ leftItem, rightItem, centerItem }: IHeader) => (
   <View style={_styles.container}>
     <View style={_styles.menuContainer}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row" }}>
         <View style={{ flex: 1, alignItems: "flex-start", marginLeft: 10 }}>
           {leftItem}
         </View>
         <View
           style={{
-            flex: 1,
+            flex: 2,
             alignItems: "center"
           }}
         >

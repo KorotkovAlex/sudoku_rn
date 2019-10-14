@@ -16,6 +16,9 @@
   },
   "LEVEL": {
     "TITLE_BUTTON": "Уровни",
+    "TITLE_BUTTON_EASY_LEVEL": "Легкий",
+    "TITLE_BUTTON_AVERAGE_LEVEL": "Средний",
+    "TITLE_BUTTON_DIFFICULT_LEVEL": "Сложный",
     "EASY_LEVEL": "Легкий уровень",
     "AVERAGE_LEVEL": "Средний уровень",
     "DIFFICULT_LEVEL": "Сложный уровень"

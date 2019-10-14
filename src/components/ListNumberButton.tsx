@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, StyleSheet, FlatList, View } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Text, StyleSheet, FlatList, View, Image } from "react-native";
 import { SudokuConsumer } from "../scripts/sudokuContext";
 
 import CustomButton from "./CustomButton";
@@ -41,7 +40,14 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
                     underlay={underlayNB}
                   >
                     {cell === 0 ? (
-                      <Icon name="eraser" size={20} color={theme.light.black} />
+                      <Image
+                        style={{
+                          tintColor: theme.light.black,
+                          width: 20,
+                          height: 20
+                        }}
+                        source={require("../../assets/icons/Erase.png")}
+                      />
                     ) : (
                       <Text style={styles.textCell}>{cell}</Text>
                     )}

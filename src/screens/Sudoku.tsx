@@ -4,14 +4,14 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  Image
 } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
 import Timer from "../components/Timer";
 import CustomButton from "../components/CustomButton";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
 import { SudokuConsumer } from "./../scripts/sudokuContext";
@@ -79,6 +79,14 @@ const Sudoku = () => {
   };
 
   const _renderCenterItem = () => {
+    let level: string = "";
+    if (amountDeleteDigit === 30) {
+      level = dictionary.LEVEL.TITLE_BUTTON_EASY_LEVEL;
+    } else if (amountDeleteDigit === 45) {
+      level = dictionary.LEVEL.TITLE_BUTTON_AVERAGE_LEVEL;
+    } else if (amountDeleteDigit === 60) {
+      level = dictionary.LEVEL.TITLE_BUTTON_DIFFICULT_LEVEL;
+    }
     return (
       <>
         <View
@@ -94,11 +102,18 @@ const Sudoku = () => {
             underlay={theme.light.underlayPersik}
             onPress={_startStopTimer}
           >
-            <Icon
-              style={styles.iconAdd}
-              name={isStop ? "play-arrow" : "pause"}
-              size={20}
-              color={theme.light.white}
+            <Image
+              style={{
+                tintColor: theme.light.white,
+                width: 20,
+                height: 20,
+                marginLeft: 5
+              }}
+              source={
+                isStop
+                  ? require("../../assets/icons/Start.png")
+                  : require("../../assets/icons/Stop.png")
+              }
             />
           </CustomButton>
         </View>
@@ -115,7 +130,9 @@ const Sudoku = () => {
             }}
             underlay={theme.light.underlayPersik}
           >
-            <Text style={styles.title}>{dictionary.LEVEL.TITLE_BUTTON}</Text>
+            <Text style={styles.title}>
+              {dictionary.LEVEL.TITLE_BUTTON + `: ${level}`}
+            </Text>
           </CustomButton>
         </View>
       </>
@@ -183,8 +200,8 @@ const Sudoku = () => {
   const _renderListLevel = () => {
     const mass = [
       { title: dictionary.LEVEL.EASY_LEVEL, amount: 30 },
-      { title: dictionary.LEVEL.AVERAGE_LEVEL, amount: 35 },
-      { title: dictionary.LEVEL.DIFFICULT_LEVEL, amount: 40 }
+      { title: dictionary.LEVEL.AVERAGE_LEVEL, amount: 45 },
+      { title: dictionary.LEVEL.DIFFICULT_LEVEL, amount: 60 }
     ];
     return (
       <>
@@ -205,7 +222,17 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[0].title}</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ paddingLeft: 5 }}>{mass[0].title}</Text>
+            {mass[0].amount === amountDeleteDigit && (
+              <Image
+                style={{ tintColor: theme.light.persik, width: 20, height: 20 }}
+                source={require("../../assets/icons/Check_in_circle.png")}
+              />
+            )}
+          </View>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={theme.light.underlayPersik}
@@ -224,7 +251,17 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[1].title}</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ paddingLeft: 5 }}>{mass[1].title}</Text>
+            {mass[1].amount === amountDeleteDigit && (
+              <Image
+                style={{ tintColor: theme.light.persik, width: 20, height: 20 }}
+                source={require("../../assets/icons/Check_in_circle.png")}
+              />
+            )}
+          </View>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={theme.light.underlayPersik}
@@ -243,7 +280,17 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[2].title}</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ paddingLeft: 5 }}>{mass[2].title}</Text>
+            {mass[2].amount === amountDeleteDigit && (
+              <Image
+                style={{ tintColor: theme.light.persik, width: 20, height: 20 }}
+                source={require("../../assets/icons/Check_in_circle.png")}
+              />
+            )}
+          </View>
         </TouchableHighlight>
       </>
     );
