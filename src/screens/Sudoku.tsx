@@ -343,7 +343,12 @@ const Sudoku = () => {
                 ]}
               >
                 <Board ref={boardRef} />
-                <View style={[styles.viewButton, { marginTop: 5 }]}>
+                <View
+                  style={[
+                    styles.viewButton,
+                    { marginTop: 5, marginBottom: 20 }
+                  ]}
+                >
                   <ListNumberButtons
                     onPress={_setNumber}
                     underlayNB={theme.light.white}
@@ -421,7 +426,6 @@ const styles = StyleSheet.create({
     color: theme.light.white
   },
   titleButton: {
-    marginTop: 5,
     textAlign: "center",
     color: theme.light.persik
   },
