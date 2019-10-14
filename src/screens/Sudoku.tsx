@@ -1,12 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Alert,
-  ScrollView,
-  StatusBar
-} from "react-native";
+import { StyleSheet, View, Text, Alert, ScrollView } from "react-native";
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -15,10 +8,11 @@ import CustomButton from "../components/CustomButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
-import SudokuContext, { SudokuConsumer } from "./../scripts/sudokuContext";
+import { SudokuConsumer } from "./../scripts/sudokuContext";
+import ConfigSingleton from "../scripts/ConfigSingleton";
 
 const Sudoku = () => {
-  const { dictionary } = useContext(SudokuContext);
+  const { dictionary } = ConfigSingleton.shared();
   const boardRef = useRef(React.createRef());
   const timerRef = useRef(React.createRef());
   const [isStop, setStop] = useState(false);

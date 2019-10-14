@@ -1,7 +1,6 @@
 import React from "react";
 
 interface ISudokuContext {
-  dictionary: any;
   dimensions: {
     width: number;
     height: number;
@@ -10,7 +9,6 @@ interface ISudokuContext {
 }
 
 const SudokuContext = React.createContext<ISudokuContext>({
-  dictionary: {},
   dimensions: {
     width: 0,
     height: 0,
