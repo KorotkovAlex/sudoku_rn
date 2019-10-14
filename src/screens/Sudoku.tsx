@@ -18,6 +18,7 @@ import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
 import SudokuContext, { SudokuConsumer } from "./../scripts/sudokuContext";
 import CustomModal from "../components/CustomModal";
+import EventEmitter from "../scripts/customEvents";
 
 interface IShowModal {
   title: string;
@@ -40,9 +41,6 @@ const Sudoku = () => {
   const [isButtonCancelModal, setIsButtonCancelModal] = useState(false);
   const [titleModal, setTitleModal] = useState("Title");
   const [bodyModal, setBodyModal] = useState(<></>);
-
-  const [onPressOkModal, setOnPressOkModal] = useState();
-  const [onPressCancelModal, setOnPressCancelModal] = useState();
 
   const [amountDeleteDigit, setAmountDeleteDigit] = useState(30);
 
@@ -69,10 +67,10 @@ const Sudoku = () => {
               title: dictionary.ALERT.WARNING_TITLE,
               body: <Text>{dictionary.ALERT.WARNING_MESSAGE_NEW_GAME}</Text>,
               isButtonCancel: true,
-              isButtonOk: true,
-              onPressCancel: _cancelModal,
-              onPressOk: reloadBoard
+              isButtonOk: true
             });
+            EventEmitter.subscribe("ok", () => reloadBoard());
+            EventEmitter.subscribe("cancel", () => _cancelModal());
           }}
         >
           <Text style={styles.newGameTitle}>{dictionary.NEW_GAME}</Text>
@@ -111,10 +109,10 @@ const Sudoku = () => {
               _showModal({
                 title: "Выберите уровень",
                 body: _renderListLevel(),
-                isButtonCancel: true,
-                isButtonOk: false,
-                onPressCancel: _cancelModal
+                isButtonCancel: false,
+                isButtonOk: true
               });
+              EventEmitter.subscribe("ok", () => _cancelModal());
             }}
             underlay={theme.light.underlayPersik}
           >
@@ -129,16 +127,12 @@ const Sudoku = () => {
     title,
     body,
     isButtonCancel,
-    isButtonOk,
-    onPressOk,
-    onPressCancel
+    isButtonOk
   }: IShowModal) => {
     setTitleModal(title);
     setBodyModal(body);
     setIsButtonCancelModal(isButtonCancel);
     setIsButtonOkModal(isButtonOk);
-    setOnPressOkModal({ func: onPressOk });
-    setOnPressCancelModal({ func: onPressCancel });
     setIsVisibleModal(true);
   };
 
@@ -147,9 +141,9 @@ const Sudoku = () => {
     setBodyModal(<></>);
     setIsButtonCancelModal(false);
     setIsButtonOkModal(false);
-    setOnPressOkModal(null);
-    setOnPressCancelModal(null);
     setIsVisibleModal(false);
+    EventEmitter.unsubscribe("ok");
+    EventEmitter.unsubscribe("cancel");
   };
 
   const _renderRightItem = () => {
@@ -173,6 +167,7 @@ const Sudoku = () => {
       isButtonOk: true,
       onPressOk: reloadBoard
     });
+    EventEmitter.subscribe("ok", () => reloadBoard());
   };
 
   const _showError = () => {
@@ -183,6 +178,7 @@ const Sudoku = () => {
       isButtonOk: true,
       onPressOk: _cancelModal
     });
+    EventEmitter.subscribe("ok", () => _cancelModal());
   };
 
   const _renderListLevel = () => {
@@ -210,7 +206,7 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[1].title}</Text>
+          <Text style={{ paddingLeft: 5 }}>{mass[0].title}</Text>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={theme.light.underlayPersik}
@@ -229,7 +225,7 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[2].title}</Text>
+          <Text style={{ paddingLeft: 5 }}>{mass[1].title}</Text>
         </TouchableHighlight>
         <TouchableHighlight
           underlayColor={theme.light.underlayPersik}
@@ -248,37 +244,9 @@ const Sudoku = () => {
             setStop(false);
           }}
         >
-          <Text style={{ paddingLeft: 5 }}>{mass[0].title}</Text>
+          <Text style={{ paddingLeft: 5 }}>{mass[2].title}</Text>
         </TouchableHighlight>
       </>
-      // <FlatList
-      //   data={}
-      //   style={{ zIndex: 20 }}
-      //   renderItem={({ item }) => {
-      //     return (
-      //       <TouchableHighlight
-      //         underlayColor={theme.light.underlayPersik}
-      //         style={{
-      //           paddingVertical: 15,
-      //           borderRadius: 5,
-      //           marginBottom: 5
-      //         }}
-      //         onPress={() => {
-      //           setAmountDeleteDigit(item.amount);
-      //           setIsVisibleModal(false);
-      //           let br: any = boardRef;
-      //           br.current.reloadBoard(item.amount);
-      //           let tr: any = timerRef;
-      //           tr.current.resetTimer();
-      //           setStop(false);
-      //         }}
-      //       >
-      //         <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
-      //       </TouchableHighlight>
-      //     );
-      //   }}
-      //   keyExtractor={(_item, index) => index.toString()}
-      // />
     );
   };
 
@@ -291,12 +259,6 @@ const Sudoku = () => {
         isButtonOk={isButtonOkModal}
         isButtonCancel={isButtonCancelModal}
         onPressBackdrop={_onPressBackdrop}
-        onPressOk={() => {
-          onPressOkModal.func();
-        }}
-        onPressCancel={() => {
-          onPressCancelModal.func();
-        }}
       />
       <View style={{ flex: 1 }}>
         <LinearGradient

@@ -4,6 +4,7 @@ import Modal from "react-native-modal";
 import CustomButton from "./CustomButton";
 import theme from "../shared/Constants";
 import SudokuContext from "../scripts/sudokuContext";
+import EventEmitter from "../scripts/customEvents";
 
 export interface ICustomModal {
   title: string;
@@ -11,8 +12,6 @@ export interface ICustomModal {
   isButtonOk: boolean;
   isButtonCancel: boolean;
   isVisible: boolean;
-  onPressOk: () => void;
-  onPressCancel: () => void;
   onPressBackdrop: () => void;
 }
 
@@ -22,8 +21,6 @@ const CustomModal = ({
   isVisible,
   isButtonOk,
   isButtonCancel,
-  onPressOk,
-  onPressCancel,
   onPressBackdrop
 }: ICustomModal) => {
   const { dictionary } = useContext(SudokuContext);
@@ -39,9 +36,9 @@ const CustomModal = ({
       >
         {isButtonCancel ? (
           <CustomButton
-            style={{ paddingVertical: 5, borderRadius: 5 }}
+            style={{ padding: 5, borderRadius: 5 }}
             underlay={theme.light.underlayPersik}
-            onPress={onPressCancel}
+            onPress={() => EventEmitter.dispatch("cancel")}
           >
             <Text>{dictionary.ALERT.CANCEL}</Text>
           </CustomButton>
@@ -50,9 +47,9 @@ const CustomModal = ({
         )}
         {isButtonOk ? (
           <CustomButton
-            style={{ paddingVertical: 5, borderRadius: 5 }}
+            style={{ padding: 5, borderRadius: 5 }}
             underlay={theme.light.underlayPersik}
-            onPress={onPressOk}
+            onPress={() => EventEmitter.dispatch("ok")}
           >
             <Text>{dictionary.ALERT.OK}</Text>
           </CustomButton>
@@ -68,10 +65,8 @@ const CustomModal = ({
       <View
         style={{
           backgroundColor: "#fff",
-          // minHeight: 300,
-          // minWidth: 300,
-          // maxHeight: "80%",
-          // maxWidth: "80%",
+          maxHeight: "80%",
+          maxWidth: "80%",
           paddingVertical: 10,
           borderRadius: 12,
           justifyContent: "center",
