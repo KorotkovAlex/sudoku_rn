@@ -4,21 +4,21 @@ import React, {
   forwardRef,
   useImperativeHandle
 } from "react";
-import { FlatList, View, StyleSheet, Text } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
 
-import { getFullBoard, CellType } from "../scripts/sudokuGenerator";
+import { getFullBoard, ICellType } from "../scripts/sudokuGenerator";
 
 let counter = 0;
 
 const Board = forwardRef(({}, ref) => {
-  const amountDeleteDigit = 30;
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
-  const [fullBoard, setFullBoard] = useState(Array<CellType[]>());
-  const [userBoard, setUserBoard] = useState(Array<CellType[]>());
+  const [fullBoard, setFullBoard] = useState(Array<ICellType[]>());
+  const [userBoard, setUserBoard] = useState(Array<ICellType[]>());
 
-  const _settingBoard = () => {
+  const _settingBoard = (amountDeleteDigit: number) => {
+    console.log("_settingBoard", amountDeleteDigit);
     const board = getFullBoard({ amountDeleteDigit });
 
     setFullBoard(board.fillSudoku);
@@ -33,7 +33,7 @@ const Board = forwardRef(({}, ref) => {
   };
 
   useEffect(() => {
-    _settingBoard();
+    _settingBoard(30);
   }, []);
 
   const _checkOnFill = () => {
@@ -71,9 +71,9 @@ const Board = forwardRef(({}, ref) => {
       return _checkOnFill();
     },
 
-    reloadBoard() {
+    reloadBoard(amount: number) {
       _cleanCurrentCell();
-      _settingBoard();
+      _settingBoard(amount);
     }
   }));
 
@@ -106,7 +106,7 @@ const Board = forwardRef(({}, ref) => {
   const _renderRow = ({ items, useBorder, columnNumber }: any) => {
     return (
       <>
-        {items.map((item: CellType, index: number) => {
+        {items.map((item: ICellType, index: number) => {
           const rowNumber = index;
 
           let border = {};

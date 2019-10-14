@@ -1,9 +1,9 @@
-export type CellType = {
+export interface ICellType {
   isPermanent: boolean;
   digit: number;
-};
-let mat: CellType[][] = [];
-let fillSudoku: CellType[][] = [];
+}
+let mat: ICellType[][] = [];
+let fillSudoku: ICellType[][] = [];
 let N: number;
 let SRN: number;
 let K: number;

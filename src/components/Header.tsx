@@ -17,9 +17,7 @@ const CustomHeader = ({ leftItem, rightItem, centerItem }: IHeader) => (
         <View
           style={{
             flex: 1,
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "center"
+            alignItems: "center"
           }}
         >
           {centerItem}
