@@ -1,11 +1,9 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Alert,
   ScrollView,
-  FlatList,
   TouchableHighlight
 } from "react-native";
 import Board from "../components/Board";
@@ -16,7 +14,8 @@ import CustomButton from "../components/CustomButton";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import theme from "../shared/Constants";
 import ListNumberButtons from "../components/ListNumberButton";
-import SudokuContext, { SudokuConsumer } from "./../scripts/sudokuContext";
+import { SudokuConsumer } from "./../scripts/sudokuContext";
+import ConfigSingleton from "../scripts/ConfigSingleton";
 import CustomModal from "../components/CustomModal";
 import EventEmitter from "../scripts/customEvents";
 
@@ -30,7 +29,7 @@ interface IShowModal {
 }
 
 const Sudoku = () => {
-  const { dictionary } = useContext(SudokuContext);
+  const { dictionary } = ConfigSingleton.shared();
   const boardRef = useRef(React.createRef());
   const timerRef = useRef(React.createRef());
 
