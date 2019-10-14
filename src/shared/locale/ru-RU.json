@@ -11,6 +11,13 @@
     "CONGRATULATE": "Поздравлю! Вы решили Судоку.",
     "YOU_ARE_WIN": "Нажмите OK, что бы начать новую игру.",
     "UNFORTUNATELY": "Увы :(",
-    "HAVE_NOT_SOLVED": "Но Судоку решено не верно."
+    "HAVE_NOT_SOLVED": "Но Судоку решено не верно.",
+    "TITLE_LEVEL": "Выберите уровень"
+  },
+  "LEVEL": {
+    "TITLE_BUTTON": "Уровни",
+    "EASY_LEVEL": "Легкий уровень",
+    "AVERAGE_LEVEL": "Средний уровень",
+    "DIFFICULT_LEVEL": "Сложный уровень"
   }
 }

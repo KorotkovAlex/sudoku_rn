@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import Modal from "react-native-modal";
 import CustomButton from "./CustomButton";
 import theme from "../shared/Constants";
-import SudokuContext from "../scripts/sudokuContext";
 import EventEmitter from "../scripts/customEvents";
+import ConfigSingleton from "../scripts/ConfigSingleton";
 
 export interface ICustomModal {
   title: string;
@@ -23,7 +23,7 @@ const CustomModal = ({
   isButtonCancel,
   onPressBackdrop
 }: ICustomModal) => {
-  const { dictionary } = useContext(SudokuContext);
+  const { dictionary } = ConfigSingleton.shared();
   const _renderButtons = () => {
     return (
       <View

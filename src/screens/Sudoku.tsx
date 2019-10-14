@@ -106,7 +106,7 @@ const Sudoku = () => {
           <CustomButton
             onPress={() => {
               _showModal({
-                title: "Выберите уровень",
+                title: dictionary.ALERT.TITLE_LEVEL,
                 body: _renderListLevel(),
                 isButtonCancel: false,
                 isButtonOk: true
@@ -115,7 +115,7 @@ const Sudoku = () => {
             }}
             underlay={theme.light.underlayPersik}
           >
-            <Text style={styles.title}>Уровни</Text>
+            <Text style={styles.title}>{dictionary.LEVEL.TITLE_BUTTON}</Text>
           </CustomButton>
         </View>
       </>
@@ -182,9 +182,9 @@ const Sudoku = () => {
 
   const _renderListLevel = () => {
     const mass = [
-      { title: "Легкий", amount: 30 },
-      { title: "Средний", amount: 35 },
-      { title: "Сложный", amount: 40 }
+      { title: dictionary.LEVEL.EASY_LEVEL, amount: 30 },
+      { title: dictionary.LEVEL.AVERAGE_LEVEL, amount: 35 },
+      { title: dictionary.LEVEL.DIFFICULT_LEVEL, amount: 40 }
     ];
     return (
       <>

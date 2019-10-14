@@ -11,6 +11,13 @@
     "CONGRATULATE": "Congratulate! You have solved Sudoku.",
     "YOU_ARE_WIN": "Press OK for starting new game.",
     "UNFORTUNATELY": "Unfortunately :(",
-    "HAVE_NOT_SOLVED": "You have not solved Sudoku."
+    "HAVE_NOT_SOLVED": "You have not solved Sudoku.",
+    "TITLE_LEVEL": "Choose level"
+  },
+  "LEVEL": {
+    "TITLE_BUTTON": "Levels",
+    "EASY_LEVEL": "Easy level",
+    "AVERAGE_LEVEL": "Average level",
+    "DIFFICULT_LEVEL": "Difficult level"
   }
 }
