@@ -163,3 +163,19 @@ export const getFullBoard = ({
     withoutDigitsSudoku: mat
   };
 };
+
+export const checkSudoku = ({ board }: any) => {
+  for (let i = 0; i < board.length; i++) {
+    let column: any = [];
+    let row: any = [];
+    for (let j = 0; j < board.length; j++) {
+      if (board[i][j].digit === 0 || board[j][i].digit === 0) return false;
+      row.push(board[i][j].digit);
+      column.push(board[j][i].digit);
+    }
+    let uniqRow = [...new Set(row)];
+    let uniqColumn = [...new Set(column)];
+    if (uniqRow.length !== 9 || uniqColumn.length !== 9) return false;
+  }
+  return true;
+};
