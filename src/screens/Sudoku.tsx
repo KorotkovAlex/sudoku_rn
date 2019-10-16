@@ -26,11 +26,13 @@ interface IShowModal {
   body: JSX.Element;
   isButtonCancel: boolean;
   isButtonOk: boolean;
-  onPressCancel?: any;
-  onPressOk?: any;
 }
 
-const Sudoku = () => {
+interface ISudoku {
+  navigation: any;
+}
+
+const Sudoku = ({ navigation }: ISudoku) => {
   const { dictionary } = ConfigSingleton.shared();
   const boardRef = useRef(React.createRef());
   const timerRef = useRef(React.createRef());
@@ -141,6 +143,33 @@ const Sudoku = () => {
     );
   };
 
+  const _renderRightItem = () => {
+    return (
+      <View
+        style={{
+          zIndex: 10,
+          paddingTop: 4
+        }}
+      >
+        <CustomButton
+          underlay={theme.light.underlayPersik}
+          onPress={() => {
+            navigation.navigate("About");
+          }}
+        >
+          <Image
+            style={{
+              tintColor: theme.light.white,
+              width: 20,
+              height: 20
+            }}
+            source={require("../../assets/icons/Info.png")}
+          />
+        </CustomButton>
+      </View>
+    );
+  };
+
   const _showModal = ({
     title,
     body,
@@ -164,10 +193,6 @@ const Sudoku = () => {
     EventEmitter.unsubscribe("cancel");
   };
 
-  const _renderRightItem = () => {
-    return <View />;
-  };
-
   const _startStopTimer = () => {
     isStop ? setStop(false) : setStop(true);
   };
@@ -182,8 +207,7 @@ const Sudoku = () => {
       title: dictionary.ALERT.CONGRATULATE,
       body: <Text>{dictionary.ALERT.YOU_ARE_WIN}</Text>,
       isButtonCancel: false,
-      isButtonOk: true,
-      onPressOk: reloadBoard
+      isButtonOk: true
     });
     EventEmitter.subscribe("ok", () => reloadBoard());
   };
@@ -193,8 +217,7 @@ const Sudoku = () => {
       title: dictionary.ALERT.UNFORTUNATELY,
       body: <Text>{dictionary.ALERT.HAVE_NOT_SOLVED}</Text>,
       isButtonCancel: false,
-      isButtonOk: true,
-      onPressOk: _cancelModal
+      isButtonOk: true
     });
     EventEmitter.subscribe("ok", () => _cancelModal());
   };
@@ -433,7 +456,10 @@ const styles = StyleSheet.create({
   customButton: {
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: theme.light.persik,
+    padding: 10
   },
   newGameTitle: {
     textAlign: "center",

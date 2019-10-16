@@ -76,7 +76,6 @@ const CustomModal = ({
         {title && (
           <Text
             style={{
-              // flex: 1,
               textAlign: "center",
               marginVertical: 5,
               fontSize: 18
@@ -89,7 +88,6 @@ const CustomModal = ({
           <View
             style={{
               marginVertical: 15
-              // flex: 3
             }}
           >
             {body}
