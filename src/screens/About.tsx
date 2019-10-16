@@ -50,29 +50,37 @@ const About = ({ navigation }: any) => {
         <View style={{ padding: 10 }}>
           <Text
             style={{
+              fontSize: 18,
+              fontWeight: "500",
+              textAlign: "center",
+              marginVertical: 10
+            }}
+          >
+            {dictionary.ABOUT.RULES_TITLE}
+          </Text>
+          <Text style={{ textAlign: "justify", lineHeight: 30, fontSize: 16 }}>
+            {dictionary.ABOUT.RULES_APP}
+          </Text>
+          <View
+            style={{
+              borderTopColor: theme.light.persik,
+              borderTopWidth: 0.3,
+              marginVertical: 20
+            }}
+          />
+
+          <Text
+            style={{
               textAlign: "center",
               fontSize: 18,
               fontWeight: "500",
-              marginBottom: 20
+              marginBottom: 10
             }}
           >
             {dictionary.ABOUT.ABOUT_TITLE}
           </Text>
           <Text style={{ textAlign: "justify", fontSize: 16 }}>
             {dictionary.ABOUT.ABOUT_APP}
-          </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "500",
-              textAlign: "center",
-              marginVertical: 20
-            }}
-          >
-            {dictionary.ABOUT.RULES_TITLE}
-          </Text>
-          <Text style={{ textAlign: "justify", fontSize: 16 }}>
-            {dictionary.ABOUT.RULES_APP}
           </Text>
         </View>
       </ScrollView>
