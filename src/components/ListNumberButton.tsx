@@ -6,11 +6,10 @@ import CustomButton from "./CustomButton";
 import theme from "../shared/Constants";
 
 interface INumberButton {
-  underlayNB: string;
   onPress: (cell: number) => void;
 }
 
-const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
+const ListNumberButtons = ({ onPress }: INumberButton) => {
   const numberData = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 0]];
 
   return (
@@ -37,7 +36,6 @@ const ListNumberButtons = ({ underlayNB, onPress }: INumberButton) => {
                       height: dimensions.baseWidth * 40
                     }}
                     onPress={() => onPress(cell)}
-                    underlay={underlayNB}
                   >
                     {cell === 0 ? (
                       <Image

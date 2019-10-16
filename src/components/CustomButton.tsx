@@ -5,32 +5,24 @@ import {
   TextStyle,
   NativeSyntheticEvent,
   NativeTouchEvent,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
 
 interface IButton {
   bgroundColor?: string;
   style?: StyleProp<ViewStyle | TextStyle>;
-  underlay: string;
   onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
   children: React.ReactNode;
 }
 
-const CustomButton = ({
-  bgroundColor,
-  style,
-  onPress,
-  children,
-  underlay = "black"
-}: IButton) => {
+const CustomButton = ({ bgroundColor, style, onPress, children }: IButton) => {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={onPress}
       style={[{ backgroundColor: bgroundColor }, style]}
-      underlayColor={underlay}
     >
       {children}
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 

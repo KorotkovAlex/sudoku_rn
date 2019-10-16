@@ -25,8 +25,8 @@ const About = ({ navigation }: any) => {
             leftItem={
               <TouchableOpacity
                 activeOpacity={0.5}
-                style={{ padding: 10 }}
                 onPress={() => navigation.goBack()}
+                hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
               >
                 <Image
                   source={require("../../assets/icons/LeftArrow.png")}
@@ -39,42 +39,42 @@ const About = ({ navigation }: any) => {
               </TouchableOpacity>
             }
             centerItem={
-              <Text
-                style={{ padding: 12, color: theme.light.white, fontSize: 16 }}
-              >
-                About application
+              <Text style={{ color: theme.light.white, fontSize: 16 }}>
+                {dictionary.ABOUT.TITLE}
               </Text>
             }
           />
         </LinearGradient>
       </View>
-      <ScrollView style={{ padding: 10 }}>
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 18,
-            fontWeight: "500",
-            marginBottom: 20
-          }}
-        >
-          Информация о приложении
-        </Text>
-        <Text style={{ textAlign: "justify", fontSize: 16 }}>
-          Приложение ...
-        </Text>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "500",
-            textAlign: "center",
-            marginVertical: 20
-          }}
-        >
-          Правила игры
-        </Text>
-        <Text style={{ textAlign: "justify", fontSize: 16, lineHeight: 25 }}>
-          {dictionary.RULES_APP}
-        </Text>
+      <ScrollView>
+        <View style={{ padding: 10 }}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 18,
+              fontWeight: "500",
+              marginBottom: 20
+            }}
+          >
+            {dictionary.ABOUT.ABOUT_TITLE}
+          </Text>
+          <Text style={{ textAlign: "justify", fontSize: 16 }}>
+            {dictionary.ABOUT.ABOUT_APP}
+          </Text>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "500",
+              textAlign: "center",
+              marginVertical: 20
+            }}
+          >
+            {dictionary.ABOUT.RULES_TITLE}
+          </Text>
+          <Text style={{ textAlign: "justify", fontSize: 16 }}>
+            {dictionary.ABOUT.RULES_APP}
+          </Text>
+        </View>
       </ScrollView>
     </>
   );
