@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
-import Modal from "react-native-modal";
+import { View, Text, Modal } from "react-native";
 import CustomButton from "./CustomButton";
 import EventEmitter from "../scripts/customEvents";
 import ConfigSingleton from "../scripts/ConfigSingleton";
@@ -98,18 +97,22 @@ const CustomModal = ({
 
   return (
     <Modal
-      isVisible={isVisible}
-      coverScreen={true}
-      style={{
-        margin: 0,
-        alignItems: "center",
-        justifyContent: "center"
-      }}
-      backdropColor="#000"
-      backdropOpacity={0.5}
-      onBackdropPress={onPressBackdrop}
+      animationType={"fade"}
+      visible={isVisible}
+      transparent={true}
+      onRequestClose={onPressBackdrop}
     >
-      {_renderBodyModal()}
+      <View
+        style={{
+          margin: 0,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          flex: 1
+        }}
+      >
+        {_renderBodyModal()}
+      </View>
     </Modal>
   );
 };
