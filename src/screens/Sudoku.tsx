@@ -7,6 +7,8 @@ import {
   TouchableHighlight,
   Image
 } from "react-native";
+import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
+
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -406,6 +408,19 @@ const Sudoku = ({ navigation }: ISudoku) => {
             )}
           </SudokuConsumer>
         </ScrollView>
+        <BannerAd
+          unitId={TestIds.BANNER}
+          size={BannerAdSize.FULL_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true
+          }}
+          onAdLoaded={() => {
+            console.log("Advert loaded");
+          }}
+          onAdFailedToLoad={(error: any) => {
+            console.error("Advert failed to load: ", error);
+          }}
+        />
       </View>
     </>
   );
