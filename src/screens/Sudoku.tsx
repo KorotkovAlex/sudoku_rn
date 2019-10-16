@@ -62,7 +62,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
 
   const _renderLeftItem = () => {
     return (
-      <View style={{ zIndex: 10 }}>
+      <View style={{ zIndex: 10, paddingTop: 2 }}>
         <CustomButton
           onPress={() => {
             _showModal({
@@ -107,8 +107,8 @@ const Sudoku = ({ navigation }: ISudoku) => {
             <Image
               style={{
                 tintColor: theme.light.white,
-                width: 20,
-                height: 20,
+                width: 25,
+                height: 25,
                 marginLeft: 5
               }}
               source={
@@ -145,7 +145,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
       <View
         style={{
           zIndex: 10,
-          paddingTop: 4
+          paddingTop: 2
         }}
       >
         <CustomButton
@@ -156,8 +156,8 @@ const Sudoku = ({ navigation }: ISudoku) => {
           <Image
             style={{
               tintColor: theme.light.white,
-              width: 20,
-              height: 20
+              width: 25,
+              height: 25
             }}
             source={require("../../assets/icons/Info.png")}
           />
@@ -370,9 +370,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                     { marginTop: 5, marginBottom: 20 }
                   ]}
                 >
-                  <ListNumberButtons
-                    onPress={_setNumber}
-                  />
+                  <ListNumberButtons onPress={_setNumber} />
                 </View>
                 <View
                   style={{
