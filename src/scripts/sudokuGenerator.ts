@@ -163,3 +163,29 @@ export const getFullBoard = ({
     withoutDigitsSudoku: mat
   };
 };
+
+const transpose = matrix =>
+  matrix[0].map((col, i) => matrix.map(row => row[i]));
+
+export const checkSudoku = ({ board }: { board: any }) => {
+  let areFill = true;
+
+  let transposedBoard = transpose(board);
+
+  for (let columnIndex = 0; columnIndex < board.length; columnIndex++) {
+    let uniq = [...new Set(board[columnIndex].map((item: any) => item.digit))];
+    let uniqTransparent = [
+      ...new Set(transposedBoard[columnIndex].map((item: any) => item.digit))
+    ];
+
+    if (uniq.length !== 9 || uniqTransparent.length !== 9) {
+      areFill = false;
+    }
+  }
+
+  if (!areFill) {
+    return false;
+  }
+
+  return true;
+};
