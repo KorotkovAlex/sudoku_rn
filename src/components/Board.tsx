@@ -9,19 +9,18 @@ import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
 
 import { getFullBoard, ICellType } from "../scripts/sudokuGenerator";
+import { checkSudoku } from "./../scripts/sudokuGenerator";
 
 let counter = 0;
 
 const Board = forwardRef(({}, ref) => {
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
-  const [fullBoard, setFullBoard] = useState(Array<ICellType[]>());
   const [userBoard, setUserBoard] = useState(Array<ICellType[]>());
 
   const _settingBoard = (amountDeleteDigit: number) => {
     console.log("_settingBoard", amountDeleteDigit);
     const board = getFullBoard({ amountDeleteDigit });
 
-    setFullBoard(board.fillSudoku);
     setUserBoard(board.withoutDigitsSudoku);
   };
 
@@ -35,20 +34,6 @@ const Board = forwardRef(({}, ref) => {
   useEffect(() => {
     _settingBoard(30);
   }, []);
-
-  const _checkOnFill = () => {
-    let isFillBoard = true;
-    fullBoard.some((row, indexOfRow) => {
-      row.some((cell, indexOfCell) => {
-        if (cell.digit !== userBoard[indexOfRow][indexOfCell].digit) {
-          isFillBoard = false;
-          return true;
-        }
-      });
-    });
-
-    return isFillBoard;
-  };
 
   useImperativeHandle(ref, () => ({
     setNumber(digit: number) {
@@ -68,7 +53,7 @@ const Board = forwardRef(({}, ref) => {
     },
 
     checkBoard() {
-      return _checkOnFill();
+      return checkSudoku({ board: userBoard });
     },
 
     reloadBoard(amount: number) {
