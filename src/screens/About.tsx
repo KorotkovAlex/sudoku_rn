@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 import LinearGradient from "react-native-linear-gradient";
 import CustomHeader from "../components/Header";
@@ -24,14 +24,24 @@ const About = ({ navigation }: any) => {
           <CustomHeader
             leftItem={
               <TouchableOpacity
+                activeOpacity={0.5}
                 style={{ padding: 10 }}
                 onPress={() => navigation.goBack()}
               >
-                <Text style={{ color: theme.light.white }}>Go back</Text>
+                <Image
+                  source={require("../../assets/icons/LeftArrow.png")}
+                  style={{
+                    height: 25,
+                    width: 25,
+                    tintColor: theme.light.white
+                  }}
+                />
               </TouchableOpacity>
             }
             centerItem={
-              <Text style={{ padding: 10, color: theme.light.white }}>
+              <Text
+                style={{ padding: 12, color: theme.light.white, fontSize: 16 }}
+              >
                 About application
               </Text>
             }
@@ -62,7 +72,7 @@ const About = ({ navigation }: any) => {
         >
           Правила игры
         </Text>
-        <Text style={{ textAlign: "justify", fontSize: 16 }}>
+        <Text style={{ textAlign: "justify", fontSize: 16, lineHeight: 25 }}>
           {dictionary.RULES_APP}
         </Text>
       </ScrollView>
