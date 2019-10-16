@@ -64,7 +64,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
     return (
       <View style={{ zIndex: 10 }}>
         <CustomButton
-          underlay={theme.light.underlayPersik}
           onPress={() => {
             _showModal({
               title: dictionary.ALERT.WARNING_TITLE,
@@ -103,7 +102,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
           <Timer stop={isStop} ref={timerRef} />
           <CustomButton
             style={{ justifyContent: "center" }}
-            underlay={theme.light.underlayPersik}
             onPress={_startStopTimer}
           >
             <Image
@@ -132,7 +130,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
               });
               EventEmitter.subscribe("ok", () => _cancelModal());
             }}
-            underlay={theme.light.underlayPersik}
           >
             <Text style={styles.title}>
               {dictionary.LEVEL.TITLE_BUTTON + `: ${level}`}
@@ -152,7 +149,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
         }}
       >
         <CustomButton
-          underlay={theme.light.underlayPersik}
           onPress={() => {
             navigation.navigate("About");
           }}
@@ -376,7 +372,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
                 >
                   <ListNumberButtons
                     onPress={_setNumber}
-                    underlayNB={theme.light.white}
                   />
                 </View>
                 <View
@@ -388,7 +383,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
                   }}
                 >
                   <CustomButton
-                    underlay={theme.light.underlayPersik}
                     style={styles.customButton}
                     onPress={() => {
                       let br: any = boardRef;
