@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "402761129718",
+    "firebase_url": "https://app-sudoku-rn.firebaseio.com",
+    "project_id": "app-sudoku-rn",
+    "storage_bucket": "app-sudoku-rn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402761129718:android:dc762668e0319c78f616d7",
+        "android_client_info": {
+          "package_name": "com.app_sudoku_rn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402761129718-o714pccfvu0lnbmnpvluui89brcf9nk4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7MR5XbH_rr2SNs3X5AsZ0F6dGlFhRbdM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402761129718-o714pccfvu0lnbmnpvluui89brcf9nk4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
