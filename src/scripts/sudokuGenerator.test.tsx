@@ -3,8 +3,6 @@ import { getFullBoard, checkSudoku } from "./sudokuGenerator";
 it("test", () => {
   const { fillSudoku } = getFullBoard({ amountDeleteDigit: 20 });
 
-  // console.log("fillSudoku", fillSudoku);
-
   const test = [
     [
       { isPermanent: true, digit: 4 },

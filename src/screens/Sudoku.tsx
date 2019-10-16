@@ -413,7 +413,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
             requestNonPersonalizedAdsOnly: true
           }}
           onAdLoaded={() => {
-            console.log("Advert loaded");
           }}
           onAdFailedToLoad={(error: any) => {
             console.error("Advert failed to load: ", error);
