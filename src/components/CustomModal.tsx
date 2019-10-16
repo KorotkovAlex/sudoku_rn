@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Modal } from "react-native";
 import CustomButton from "./CustomButton";
-import theme from "../shared/Constants";
 import EventEmitter from "../scripts/customEvents";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 
@@ -36,7 +35,6 @@ const CustomModal = ({
         {isButtonCancel ? (
           <CustomButton
             style={{ padding: 5, borderRadius: 5 }}
-            underlay={theme.light.underlayPersik}
             onPress={() => EventEmitter.dispatch("cancel")}
           >
             <Text>{dictionary.ALERT.CANCEL}</Text>
@@ -47,7 +45,6 @@ const CustomModal = ({
         {isButtonOk ? (
           <CustomButton
             style={{ padding: 5, borderRadius: 5 }}
-            underlay={theme.light.underlayPersik}
             onPress={() => EventEmitter.dispatch("ok")}
           >
             <Text>{dictionary.ALERT.OK}</Text>
