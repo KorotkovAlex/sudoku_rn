@@ -18,7 +18,6 @@ const Board = forwardRef(({}, ref) => {
   const [userBoard, setUserBoard] = useState(Array<ICellType[]>());
 
   const _settingBoard = (amountDeleteDigit: number) => {
-    console.log("_settingBoard", amountDeleteDigit);
     const board = getFullBoard({ amountDeleteDigit });
 
     setUserBoard(board.withoutDigitsSudoku);
