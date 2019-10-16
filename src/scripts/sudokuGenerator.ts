@@ -164,28 +164,18 @@ export const getFullBoard = ({
   };
 };
 
-const transpose = matrix =>
-  matrix[0].map((col, i) => matrix.map(row => row[i]));
-
-export const checkSudoku = ({ board }: { board: any }) => {
-  let areFill = true;
-
-  let transposedBoard = transpose(board);
-
-  for (let columnIndex = 0; columnIndex < board.length; columnIndex++) {
-    let uniq = [...new Set(board[columnIndex].map((item: any) => item.digit))];
-    let uniqTransparent = [
-      ...new Set(transposedBoard[columnIndex].map((item: any) => item.digit))
-    ];
-
-    if (uniq.length !== 9 || uniqTransparent.length !== 9) {
-      areFill = false;
+export const checkSudoku = ({ board }: any) => {
+  for (let i = 0; i < board.length; i++) {
+    let column: any = [];
+    let row: any = [];
+    for (let j = 0; j < board.length; j++) {
+      if (board[i][j].digit === 0 || board[j][i].digit === 0) return false;
+      row.push(board[i][j].digit);
+      column.push(board[j][i].digit);
     }
+    let uniqRow = [...new Set(row)];
+    let uniqColumn = [...new Set(column)];
+    if (uniqRow.length !== 9 || uniqColumn.length !== 9) return false;
   }
-
-  if (!areFill) {
-    return false;
-  }
-
   return true;
 };
