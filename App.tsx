@@ -1,7 +1,6 @@
 import React from "react";
 import { createAppContainer } from "react-navigation";
 import { StatusBar, View, NativeModules, Dimensions } from "react-native";
-import SplashScreen from "react-native-splash-screen";
 
 import { RootStack } from "./src/navigator/Navigator";
 import { SudokuProvider } from "./src/scripts/sudokuContext";

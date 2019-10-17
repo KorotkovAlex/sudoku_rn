@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef } from "react";
-import { View, Text } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import { View, Text, AsyncStorage } from "react-native";
 
 import useInterval from "../scripts/customHooks";
 import theme from "./../shared/Constants";

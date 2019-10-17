@@ -5,10 +5,10 @@ import {
   Text,
   ScrollView,
   TouchableHighlight,
-  Image
+  Image,
+  AsyncStorage
 } from "react-native";
-import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
-import AsyncStorage from "@react-native-community/async-storage";
+import { BannerAd, BannerAdSize } from "@react-native-firebase/admob";
 import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
@@ -435,8 +435,8 @@ const Sudoku = ({ navigation }: ISudoku) => {
           </SudokuConsumer>
         </ScrollView>
         <BannerAd
-          unitId={TestIds.BANNER}
-          size={BannerAdSize.FULL_BANNER}
+          unitId={"ca-app-pub-7449816204078262/3996503455"}
+          size={BannerAdSize.BANNER}
           requestOptions={{
             requestNonPersonalizedAdsOnly: true
           }}
