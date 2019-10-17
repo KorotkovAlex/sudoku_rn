@@ -418,7 +418,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                 style={[
                   styles.view,
                   {
-                    paddingTop: dimensions.height * 0.14
+                    paddingTop: dimensions.height * 0.2
                   }
                 ]}
               >
