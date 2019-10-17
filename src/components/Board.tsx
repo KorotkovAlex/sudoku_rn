@@ -5,10 +5,13 @@ import React, {
   useImperativeHandle
 } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
 
 import { getFullBoard, ICellType } from "../scripts/sudokuGenerator";
+import EventEmitter from "../scripts/customEvents";
 
 let counter = 0;
 
@@ -18,11 +21,21 @@ const Board = forwardRef(({}, ref) => {
   const [userBoard, setUserBoard] = useState(Array<ICellType[]>());
 
   const _settingBoard = (amountDeleteDigit: number) => {
-    console.log("_settingBoard", amountDeleteDigit);
     const board = getFullBoard({ amountDeleteDigit });
 
     setFullBoard(board.fillSudoku);
     setUserBoard(board.withoutDigitsSudoku);
+  };
+
+  const _getBoardFromAS = async () => {
+    _settingBoard(30);
+
+    let board = await AsyncStorage.getItem("board");
+
+    if (board) {
+      EventEmitter.dispatch("what_start");
+      return;
+    }
   };
 
   const _cleanCurrentCell = () => {
@@ -33,7 +46,7 @@ const Board = forwardRef(({}, ref) => {
   };
 
   useEffect(() => {
-    _settingBoard(30);
+    _getBoardFromAS();
   }, []);
 
   const _checkOnFill = () => {
@@ -65,6 +78,7 @@ const Board = forwardRef(({}, ref) => {
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+      EventEmitter.dispatch("save_board", newUserBoard);
     },
 
     checkBoard() {
@@ -74,6 +88,12 @@ const Board = forwardRef(({}, ref) => {
     reloadBoard(amount: number) {
       _cleanCurrentCell();
       _settingBoard(amount);
+    },
+
+    async continue() {
+      let board: any = await AsyncStorage.getItem("board");
+
+      setUserBoard(JSON.parse(board).userBoard);
     }
   }));
 
