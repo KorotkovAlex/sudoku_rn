@@ -295,10 +295,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[0].amount);
             setIsVisibleModal(false);
-            let br: any = boardRef;
-            br.current.reloadBoard();
-            let tr: any = timerRef;
-            tr.current.resetTimer();
+            setTimeout(() => {
+              let br: any = boardRef;
+              br.current.reloadBoard();
+              let tr: any = timerRef;
+              tr.current.resetTimer();
+            }, 0);
             setStop(false);
           }}
         >
@@ -324,10 +326,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[1].amount);
             setIsVisibleModal(false);
-            let br: any = boardRef;
-            br.current.reloadBoard();
-            let tr: any = timerRef;
-            tr.current.resetTimer();
+            setTimeout(() => {
+              let br: any = boardRef;
+              br.current.reloadBoard();
+              let tr: any = timerRef;
+              tr.current.resetTimer();
+            }, 0);
             setStop(false);
           }}
         >
@@ -353,10 +357,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[2].amount);
             setIsVisibleModal(false);
-            let br: any = boardRef;
-            br.current.reloadBoard();
-            let tr: any = timerRef;
-            tr.current.resetTimer();
+            setTimeout(() => {
+              let br: any = boardRef;
+              br.current.reloadBoard();
+              let tr: any = timerRef;
+              tr.current.resetTimer();
+            }, 0);
             setStop(false);
           }}
         >
