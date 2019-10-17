@@ -13,7 +13,7 @@ const About = ({ navigation }: any) => {
     <>
       <View
         style={{
-          height: 90
+          height: 80
         }}
       >
         <LinearGradient
@@ -22,6 +22,7 @@ const About = ({ navigation }: any) => {
           colors={theme.light.linear_gradient}
           style={{ flex: 1 }}
         >
+          <View style={{margin: 5}}>
           <CustomHeader
             leftItem={
               <CustomButton onPress={() => navigation.goBack()}>
@@ -41,6 +42,7 @@ const About = ({ navigation }: any) => {
               </Text>
             }
           />
+          </View>
         </LinearGradient>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
