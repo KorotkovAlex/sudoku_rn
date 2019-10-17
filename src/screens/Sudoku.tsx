@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   Image
 } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -51,11 +52,50 @@ const Sudoku = ({ navigation }: ISudoku) => {
     setIsVisibleModal(false);
   };
 
+  useEffect(() => {
+    EventEmitter.subscribe("save_board", (board: any) => {
+      let tr: any = timerRef;
+
+      AsyncStorage.setItem(
+        "board",
+        JSON.stringify({ userBoard: board, timer: tr.current.getTimer() })
+      );
+    });
+
+    EventEmitter.subscribe("what_start", () => {
+      _showModal({
+        title: dictionary.ALERT.TITLE_LEVEL,
+        body: (
+          <View>
+            <CustomButton onPress={reloadBoard}>
+              <Text>New game</Text>
+            </CustomButton>
+            <CustomButton onPress={_continue}>
+              <Text>Continue</Text>
+            </CustomButton>
+          </View>
+        ),
+        isButtonCancel: false,
+        isButtonOk: true
+      });
+      EventEmitter.subscribe("ok", () => _cancelModal());
+    });
+  }, []);
+
   const reloadBoard = () => {
     let br: any = boardRef;
     br.current.reloadBoard(amountDeleteDigit);
     let tr: any = timerRef;
     tr.current.resetTimer();
+    _cancelModal();
+    setStop(false);
+  };
+
+  const _continue = () => {
+    let br: any = boardRef;
+    br.current.continue();
+    let tr: any = timerRef;
+    tr.current.setTimer();
     _cancelModal();
     setStop(false);
   };
@@ -370,9 +410,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                     { marginTop: 5, marginBottom: 20 }
                   ]}
                 >
-                  <ListNumberButtons
-                    onPress={_setNumber}
-                  />
+                  <ListNumberButtons onPress={_setNumber} />
                 </View>
                 <View
                   style={{

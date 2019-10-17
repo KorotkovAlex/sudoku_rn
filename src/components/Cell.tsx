@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { CellType } from "../scripts/sudokuGenerator";
+import { ICellType } from "../scripts/sudokuGenerator";
 import { SudokuConsumer } from "../scripts/sudokuContext";
 
 interface ICellProps {
   title: string;
   style?: any;
   onPress: () => void;
-  item: CellType;
+  item: ICellType;
 }
 
 export default class Cell extends React.PureComponent<ICellProps> {
