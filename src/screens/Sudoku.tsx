@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableHighlight,
   Image,
-  AsyncStorage
+  AsyncStorage,
+  AppState
 } from "react-native";
 import { BannerAd, BannerAdSize } from "@react-native-firebase/admob";
 import SplashScreen from "react-native-splash-screen";
@@ -54,21 +55,37 @@ const Sudoku = ({ navigation }: ISudoku) => {
   };
 
   useEffect(() => {
-    EventEmitter.subscribe("save_board", async (board: any) => {
-      let tr: any = timerRef;
-
-      await AsyncStorage.setItem(
-        "board",
-        JSON.stringify({ userBoard: board, timer: tr.current.getTimer() })
-      );
+    EventEmitter.subscribe("save_board", async () => {
+      await _saveBoard();
     });
 
-    EventEmitter.subscribe("what_start", () => {
-      _continue();
+    EventEmitter.subscribe("what_start", async () => {
+      await _continue();
     });
+
+    AppState.addEventListener("change", _handleAppStateChange);
   }, []);
 
-  const reloadBoard = () => {
+  const _handleAppStateChange = async (nextAppState: any) => {
+    if (nextAppState === "background") {
+      await _saveBoard();
+    }
+  };
+
+  const _saveBoard = async () => {
+    let tr: any = timerRef;
+    let br: any = boardRef;
+
+    await AsyncStorage.setItem(
+      "board",
+      JSON.stringify({
+        userBoard: br.current.getBoard(),
+        timer: tr.current.getTimer()
+      })
+    );
+  };
+
+  const reloadBoard = async () => {
     let br: any = boardRef;
     br.current.reloadBoard(amountDeleteDigit);
     let tr: any = timerRef;
@@ -76,6 +93,8 @@ const Sudoku = ({ navigation }: ISudoku) => {
     _cancelModal();
     setStop(false);
     SplashScreen.hide();
+
+    await _saveBoard();
   };
 
   const _continue = async () => {
