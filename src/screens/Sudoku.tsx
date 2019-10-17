@@ -36,6 +36,7 @@ interface ISudoku {
 }
 
 const Sudoku = ({ navigation }: ISudoku) => {
+  let isError = false;
   const { dictionary } = ConfigSingleton.shared();
   const boardRef = useRef(React.createRef());
   const timerRef = useRef(React.createRef());
@@ -63,6 +64,17 @@ const Sudoku = ({ navigation }: ISudoku) => {
       await _continue();
     });
 
+    EventEmitter.subscribe("checked_board", (isCheck: boolean) => {
+      console.log("isCheck", isCheck);
+      if (isCheck) {
+        isError = false;
+        _congratulateUser();
+      } else if (!isError) {
+        isError = true;
+        _showError();
+      }
+    });
+
     AppState.addEventListener("change", _handleAppStateChange);
   }, []);
 
@@ -87,7 +99,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
 
   const reloadBoard = async () => {
     let br: any = boardRef;
-    br.current.reloadBoard(amountDeleteDigit);
+    br.current.reloadBoard();
     let tr: any = timerRef;
     tr.current.resetTimer();
     _cancelModal();
@@ -284,7 +296,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
             setAmountDeleteDigit(mass[0].amount);
             setIsVisibleModal(false);
             let br: any = boardRef;
-            br.current.reloadBoard(mass[0].amount);
+            br.current.reloadBoard();
             let tr: any = timerRef;
             tr.current.resetTimer();
             setStop(false);
@@ -313,7 +325,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
             setAmountDeleteDigit(mass[1].amount);
             setIsVisibleModal(false);
             let br: any = boardRef;
-            br.current.reloadBoard(mass[1].amount);
+            br.current.reloadBoard();
             let tr: any = timerRef;
             tr.current.resetTimer();
             setStop(false);
@@ -342,7 +354,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
             setAmountDeleteDigit(mass[2].amount);
             setIsVisibleModal(false);
             let br: any = boardRef;
-            br.current.reloadBoard(mass[2].amount);
+            br.current.reloadBoard();
             let tr: any = timerRef;
             tr.current.resetTimer();
             setStop(false);
@@ -410,7 +422,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                   }
                 ]}
               >
-                <Board ref={boardRef} />
+                <Board ref={boardRef} amountDeleteDigit={amountDeleteDigit} />
                 <View
                   style={[
                     styles.viewButton,
@@ -418,36 +430,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
                   ]}
                 >
                   <ListNumberButtons onPress={_setNumber} />
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                    justifyContent: "center",
-                    flexDirection: "row"
-                  }}
-                >
-                  <CustomButton
-                    style={styles.customButton}
-                    onPress={() => {
-                      let br: any = boardRef;
-                      const isEnd = br.current.checkBoard();
-                      if (isEnd) {
-                        _congratulateUser();
-                      } else {
-                        _showError();
-                      }
-                    }}
-                  >
-                    <Text
-                      style={[
-                        styles.titleButton,
-                        { fontSize: 16 * dimensions.baseWidth }
-                      ]}
-                    >
-                      {dictionary.END_GAME}
-                    </Text>
-                  </CustomButton>
                 </View>
               </View>
             )}
@@ -461,7 +443,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
           }}
           onAdLoaded={() => {}}
           onAdFailedToLoad={(error: any) => {
-            console.error("Advert failed to load: ", error);
+            console.log("Advert failed to load: ", error);
           }}
         />
       </View>
