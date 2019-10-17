@@ -16,7 +16,8 @@ export default class Cell extends React.PureComponent<ICellProps> {
       <SudokuConsumer>
         {({ dimensions }) => (
           <TouchableOpacity
-            onPress={this.props.onPress}
+            onPressIn={this.props.onPress}
+            delayPressIn={0}
             style={[
               _styles.box,
               this.props.style,
