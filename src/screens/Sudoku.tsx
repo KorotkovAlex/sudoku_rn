@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
 import AsyncStorage from "@react-native-community/async-storage";
+import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -53,32 +54,17 @@ const Sudoku = ({ navigation }: ISudoku) => {
   };
 
   useEffect(() => {
-    EventEmitter.subscribe("save_board", (board: any) => {
+    EventEmitter.subscribe("save_board", async (board: any) => {
       let tr: any = timerRef;
 
-      AsyncStorage.setItem(
+      await AsyncStorage.setItem(
         "board",
         JSON.stringify({ userBoard: board, timer: tr.current.getTimer() })
       );
     });
 
     EventEmitter.subscribe("what_start", () => {
-      _showModal({
-        title: dictionary.ALERT.TITLE_LEVEL,
-        body: (
-          <View>
-            <CustomButton onPress={reloadBoard}>
-              <Text>New game</Text>
-            </CustomButton>
-            <CustomButton onPress={_continue}>
-              <Text>Continue</Text>
-            </CustomButton>
-          </View>
-        ),
-        isButtonCancel: false,
-        isButtonOk: true
-      });
-      EventEmitter.subscribe("ok", () => _cancelModal());
+      _continue();
     });
   }, []);
 
@@ -89,15 +75,17 @@ const Sudoku = ({ navigation }: ISudoku) => {
     tr.current.resetTimer();
     _cancelModal();
     setStop(false);
+    SplashScreen.hide();
   };
 
-  const _continue = () => {
+  const _continue = async () => {
     let br: any = boardRef;
     br.current.continue();
     let tr: any = timerRef;
-    tr.current.setTimer();
+    await tr.current.setTimer();
     _cancelModal();
     setStop(false);
+    SplashScreen.hide();
   };
 
   const _renderLeftItem = () => {
@@ -452,8 +440,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
           requestOptions={{
             requestNonPersonalizedAdsOnly: true
           }}
-          onAdLoaded={() => {
-          }}
+          onAdLoaded={() => {}}
           onAdFailedToLoad={(error: any) => {
             console.error("Advert failed to load: ", error);
           }}

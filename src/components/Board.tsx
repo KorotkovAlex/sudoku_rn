@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import SplashScreen from "react-native-splash-screen";
 
 import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
@@ -35,6 +36,9 @@ const Board = forwardRef(({}, ref) => {
       EventEmitter.dispatch("what_start");
       return;
     }
+
+    console.log("test hide");
+    SplashScreen.hide();
   };
 
   const _cleanCurrentCell = () => {

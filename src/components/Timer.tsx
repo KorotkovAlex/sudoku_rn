@@ -25,6 +25,8 @@ const Timer = forwardRef(({ stop }: ITimer, ref) => {
 
       setSecond(timer.seconds);
       setMinute(timer.minutes);
+
+      return true;
     },
 
     getTimer() {
