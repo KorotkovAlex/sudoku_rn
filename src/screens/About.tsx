@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, Image } from "react-native";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 import LinearGradient from "react-native-linear-gradient";
 import CustomHeader from "../components/Header";

@@ -16,11 +16,15 @@ import { checkSudoku } from "./../scripts/sudokuGenerator";
 
 let counter = 0;
 
-const Board = forwardRef(({}, ref) => {
+interface IBoard {
+  amountDeleteDigit: number;
+}
+
+const Board = forwardRef(({ amountDeleteDigit }: IBoard, ref) => {
   const [currentCell, setCurrentCell] = useState({ row: -1, column: -1 });
   const [userBoard, setUserBoard] = useState(Array<ICellType[]>());
 
-  const _settingBoard = (amountDeleteDigit: number) => {
+  const _settingBoard = () => {
     const board = getFullBoard({ amountDeleteDigit });
 
     setUserBoard(board.withoutDigitsSudoku);
@@ -60,12 +64,22 @@ const Board = forwardRef(({}, ref) => {
 
       let newUserBoard = [...userBoard];
 
-      if (newUserBoard[column][row].digit === 0) {
+      if (digit !== 0 && newUserBoard[column][row].digit === 0) {
         counter = counter + 1;
+      } else if (digit === 0) {
+        counter = counter - 1;
       }
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+      console.log("amountDeleteDigit", amountDeleteDigit);
+      console.log("counter", counter);
+      if (amountDeleteDigit === counter) {
+        EventEmitter.dispatch(
+          "checked_board",
+          checkSudoku({ board: userBoard })
+        );
+      }
       EventEmitter.dispatch("save_board");
     },
 
@@ -73,9 +87,10 @@ const Board = forwardRef(({}, ref) => {
       return checkSudoku({ board: userBoard });
     },
 
-    reloadBoard(amount: number) {
+    reloadBoard() {
+      counter = 0;
       _cleanCurrentCell();
-      _settingBoard(amount);
+      _settingBoard();
     },
 
     async continue() {
