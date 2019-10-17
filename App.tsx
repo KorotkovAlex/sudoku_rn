@@ -34,7 +34,6 @@ export default class App extends React.Component<{}, IAppState> {
   };
 
   componentDidMount() {
-    SplashScreen.hide();
     Dimensions.addEventListener("change", e => this._changeDimensionsValue(e));
   }
 
