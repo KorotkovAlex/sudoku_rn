@@ -455,7 +455,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
         </ScrollView>
         <BannerAd
           unitId={"ca-app-pub-7449816204078262/3996503455"}
-          size={BannerAdSize.BANNER}
+          size={BannerAdSize.FULL_BANNER}
           requestOptions={{
             requestNonPersonalizedAdsOnly: true
           }}
