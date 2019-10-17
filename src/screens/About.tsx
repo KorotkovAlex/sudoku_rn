@@ -5,6 +5,7 @@ import LinearGradient from "react-native-linear-gradient";
 import CustomHeader from "../components/Header";
 import theme from "../shared/Constants";
 import { ScrollView } from "react-native-gesture-handler";
+import CustomButton from "../components/CustomButton";
 
 const About = ({ navigation }: any) => {
   const { dictionary } = ConfigSingleton.shared();
@@ -23,11 +24,7 @@ const About = ({ navigation }: any) => {
         >
           <CustomHeader
             leftItem={
-              <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => navigation.goBack()}
-                hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-              >
+              <CustomButton onPress={() => navigation.goBack()}>
                 <Image
                   source={require("../../assets/icons/LeftArrow.png")}
                   style={{
@@ -36,7 +33,7 @@ const About = ({ navigation }: any) => {
                     tintColor: theme.light.white
                   }}
                 />
-              </TouchableOpacity>
+              </CustomButton>
             }
             centerItem={
               <Text style={{ color: theme.light.white, fontSize: 16 }}>
@@ -46,7 +43,7 @@ const About = ({ navigation }: any) => {
           />
         </LinearGradient>
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ padding: 10 }}>
           <Text
             style={{
