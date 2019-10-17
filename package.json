@@ -10,7 +10,6 @@
     "lint": "tslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.6.2",
     "@react-native-firebase/admob": "^6.0.1",
     "@react-native-firebase/app": "^6.0.1",
     "react": "16.9.0",
