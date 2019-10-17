@@ -66,7 +66,7 @@ const Board = forwardRef(({}, ref) => {
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
-      EventEmitter.dispatch("save_board", newUserBoard);
+      EventEmitter.dispatch("save_board");
     },
 
     checkBoard() {
@@ -82,6 +82,10 @@ const Board = forwardRef(({}, ref) => {
       let board: any = await AsyncStorage.getItem("board");
 
       setUserBoard(JSON.parse(board).userBoard);
+    },
+
+    getBoard() {
+      return userBoard;
     }
   }));
 
