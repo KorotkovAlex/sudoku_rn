@@ -1,13 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
   TouchableHighlight,
-  Image
+  Image,
+  AsyncStorage,
+  AppState
 } from "react-native";
-import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
+import { BannerAd, BannerAdSize } from "@react-native-firebase/admob";
+import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
 import CustomHeader from "./../components/Header";
@@ -51,13 +54,57 @@ const Sudoku = ({ navigation }: ISudoku) => {
     setIsVisibleModal(false);
   };
 
-  const reloadBoard = () => {
+  useEffect(() => {
+    EventEmitter.subscribe("save_board", async () => {
+      await _saveBoard();
+    });
+
+    EventEmitter.subscribe("what_start", async () => {
+      await _continue();
+    });
+
+    AppState.addEventListener("change", _handleAppStateChange);
+  }, []);
+
+  const _handleAppStateChange = async (nextAppState: any) => {
+    if (nextAppState === "background") {
+      await _saveBoard();
+    }
+  };
+
+  const _saveBoard = async () => {
+    let tr: any = timerRef;
+    let br: any = boardRef;
+
+    await AsyncStorage.setItem(
+      "board",
+      JSON.stringify({
+        userBoard: br.current.getBoard(),
+        timer: tr.current.getTimer()
+      })
+    );
+  };
+
+  const reloadBoard = async () => {
     let br: any = boardRef;
     br.current.reloadBoard(amountDeleteDigit);
     let tr: any = timerRef;
     tr.current.resetTimer();
     _cancelModal();
     setStop(false);
+    SplashScreen.hide();
+
+    await _saveBoard();
+  };
+
+  const _continue = async () => {
+    let br: any = boardRef;
+    br.current.continue();
+    let tr: any = timerRef;
+    await tr.current.setTimer();
+    _cancelModal();
+    setStop(false);
+    SplashScreen.hide();
   };
 
   const _renderLeftItem = () => {
@@ -407,13 +454,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           </SudokuConsumer>
         </ScrollView>
         <BannerAd
-          unitId={TestIds.BANNER}
-          size={BannerAdSize.FULL_BANNER}
+          unitId={"ca-app-pub-7449816204078262/3996503455"}
+          size={BannerAdSize.BANNER}
           requestOptions={{
             requestNonPersonalizedAdsOnly: true
           }}
-          onAdLoaded={() => {
-          }}
+          onAdLoaded={() => {}}
           onAdFailedToLoad={(error: any) => {
             console.error("Advert failed to load: ", error);
           }}

@@ -4,11 +4,14 @@ import React, {
   forwardRef,
   useImperativeHandle
 } from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, AsyncStorage } from "react-native";
+import SplashScreen from "react-native-splash-screen";
+
 import { SudokuConsumer } from "../scripts/sudokuContext";
 import Cell from "./Cell";
 
 import { getFullBoard, ICellType } from "../scripts/sudokuGenerator";
+import EventEmitter from "../scripts/customEvents";
 import { checkSudoku } from "./../scripts/sudokuGenerator";
 
 let counter = 0;
@@ -23,6 +26,20 @@ const Board = forwardRef(({}, ref) => {
     setUserBoard(board.withoutDigitsSudoku);
   };
 
+  const _getBoardFromAS = async () => {
+    _settingBoard(30);
+
+    let board = await AsyncStorage.getItem("board");
+
+    if (board) {
+      EventEmitter.dispatch("what_start");
+      return;
+    }
+
+    console.log("test hide");
+    SplashScreen.hide();
+  };
+
   const _cleanCurrentCell = () => {
     setCurrentCell({
       row: -1,
@@ -31,7 +48,7 @@ const Board = forwardRef(({}, ref) => {
   };
 
   useEffect(() => {
-    _settingBoard(30);
+    _getBoardFromAS();
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -49,6 +66,7 @@ const Board = forwardRef(({}, ref) => {
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
+      EventEmitter.dispatch("save_board");
     },
 
     checkBoard() {
@@ -58,6 +76,16 @@ const Board = forwardRef(({}, ref) => {
     reloadBoard(amount: number) {
       _cleanCurrentCell();
       _settingBoard(amount);
+    },
+
+    async continue() {
+      let board: any = await AsyncStorage.getItem("board");
+
+      setUserBoard(JSON.parse(board).userBoard);
+    },
+
+    getBoard() {
+      return userBoard;
     }
   }));
 
@@ -259,11 +287,11 @@ const _styles = StyleSheet.create({
   },
 
   boldBottomBorder: {
-    borderBottomWidth: 0.7,
+    borderBottomWidth: 2,
     borderColor: "#FE7D5E"
   },
   boldRightBorder: {
-    borderRightWidth: 0.7,
+    borderRightWidth: 2,
     borderColor: "#FE7D5E"
   },
 

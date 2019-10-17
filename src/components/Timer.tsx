@@ -1,5 +1,6 @@
 import React, { useState, useImperativeHandle, forwardRef } from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage } from "react-native";
+
 import useInterval from "../scripts/customHooks";
 import theme from "./../shared/Constants";
 
@@ -15,6 +16,23 @@ const Timer = forwardRef(({ stop }: ITimer, ref) => {
     resetTimer() {
       setSecond("00");
       setMinute("00");
+    },
+
+    async setTimer() {
+      let board: any = await AsyncStorage.getItem("board");
+      const { timer } = JSON.parse(board);
+
+      setSecond(timer.seconds);
+      setMinute(timer.minutes);
+
+      return true;
+    },
+
+    getTimer() {
+      return {
+        seconds: secondsCounter,
+        minutes: minutesCounter
+      };
     }
   }));
 

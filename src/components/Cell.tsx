@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { CellType } from "../scripts/sudokuGenerator";
+import { ICellType } from "../scripts/sudokuGenerator";
 import { SudokuConsumer } from "../scripts/sudokuContext";
 
 interface ICellProps {
   title: string;
   style?: any;
   onPress: () => void;
-  item: CellType;
+  item: ICellType;
 }
 
 export default class Cell extends React.PureComponent<ICellProps> {
@@ -16,7 +16,8 @@ export default class Cell extends React.PureComponent<ICellProps> {
       <SudokuConsumer>
         {({ dimensions }) => (
           <TouchableOpacity
-            onPress={this.props.onPress}
+            onPressIn={this.props.onPress}
+            delayPressIn={0}
             style={[
               _styles.box,
               this.props.style,
