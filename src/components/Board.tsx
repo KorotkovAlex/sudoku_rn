@@ -287,11 +287,11 @@ const _styles = StyleSheet.create({
   },
 
   boldBottomBorder: {
-    borderBottomWidth: 0.7,
+    borderBottomWidth: 2,
     borderColor: "#FE7D5E"
   },
   boldRightBorder: {
-    borderRightWidth: 0.7,
+    borderRightWidth: 2,
     borderColor: "#FE7D5E"
   },
 
