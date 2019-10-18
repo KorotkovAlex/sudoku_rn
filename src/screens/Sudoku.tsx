@@ -398,13 +398,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
           end={{ x: 1, y: 0 }}
           colors={theme.light.linear_gradient}
           style={{ flex: 1 }}
-        >
-          <CustomHeader
-            leftItem={_renderLeftItem()}
-            centerItem={_renderCenterItem()}
-            rightItem={_renderRightItem()}
-          />
-        </LinearGradient>
+        ></LinearGradient>
         <View style={{ flex: 2 }} />
       </View>
 
@@ -417,6 +411,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           right: 0
         }}
       >
+        <CustomHeader
+          leftItem={_renderLeftItem()}
+          centerItem={_renderCenterItem()}
+          rightItem={_renderRightItem()}
+        />
+
         <ScrollView>
           <SudokuConsumer>
             {({ dimensions }) => (
@@ -424,7 +424,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                 style={[
                   styles.view,
                   {
-                    paddingTop: dimensions.height * 0.2
+                    marginTop: 10
                   }
                 ]}
               >
