@@ -9,7 +9,7 @@ import {
   AsyncStorage,
   AppState
 } from "react-native";
-import { BannerAd, BannerAdSize } from "@react-native-firebase/admob";
+import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
 import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
@@ -61,6 +61,8 @@ const Sudoku = ({ navigation }: ISudoku) => {
     });
 
     EventEmitter.subscribe("what_start", async () => {
+      let board: any = await AsyncStorage.getItem("board");
+      setAmountDeleteDigit(JSON.parse(board).amountDigit);
       await _continue();
     });
 
@@ -87,12 +89,14 @@ const Sudoku = ({ navigation }: ISudoku) => {
   const _saveBoard = async () => {
     let tr: any = timerRef;
     let br: any = boardRef;
+    console.log(br.current.getAmount());
 
     await AsyncStorage.setItem(
       "board",
       JSON.stringify({
         userBoard: br.current.getBoard(),
-        timer: tr.current.getTimer()
+        timer: tr.current.getTimer(),
+        amountDigit: br.current.getAmount()
       })
     );
   };
@@ -105,13 +109,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
     _cancelModal();
     setStop(false);
     SplashScreen.hide();
-
     await _saveBoard();
   };
 
   const _continue = async () => {
     let br: any = boardRef;
-    br.current.continue();
+    await br.current.continue();
     let tr: any = timerRef;
     await tr.current.setTimer();
     _cancelModal();
@@ -277,6 +280,14 @@ const Sudoku = ({ navigation }: ISudoku) => {
     EventEmitter.subscribe("ok", () => _cancelModal());
   };
 
+  useEffect(() => {
+    console.log("amountDeleteDigit", amountDeleteDigit);
+    let br: any = boardRef;
+    br.current.reloadBoard();
+    let tr: any = timerRef;
+    tr.current.resetTimer();
+  }, [amountDeleteDigit]);
+
   const _renderListLevel = () => {
     const mass = [
       { title: dictionary.LEVEL.EASY_LEVEL, amount: 30 },
@@ -285,7 +296,35 @@ const Sudoku = ({ navigation }: ISudoku) => {
     ];
     return (
       <>
-        <TouchableHighlight
+        {mass.map((item, index) => {
+          return <TouchableHighlight
+            key={index}
+            underlayColor={theme.light.underlayPersik}
+            style={{
+              paddingVertical: 15,
+              borderRadius: 5,
+              marginBottom: 5
+            }}
+            onPress={() => {
+              setAmountDeleteDigit(item.amount);
+              setIsVisibleModal(false);
+              setStop(false);
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
+              {item.amount === amountDeleteDigit && (
+                <Image
+                  style={{ tintColor: theme.light.persik, width: 20, height: 20 }}
+                  source={require("../../assets/icons/Check_in_circle.png")}
+                />
+              )}
+            </View>
+          </TouchableHighlight>;
+        })}
+        {/* <TouchableHighlight
           underlayColor={theme.light.underlayPersik}
           style={{
             paddingVertical: 15,
@@ -295,12 +334,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[0].amount);
             setIsVisibleModal(false);
-            setTimeout(() => {
-              let br: any = boardRef;
-              br.current.reloadBoard();
-              let tr: any = timerRef;
-              tr.current.resetTimer();
-            }, 0);
             setStop(false);
           }}
         >
@@ -326,12 +359,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[1].amount);
             setIsVisibleModal(false);
-            setTimeout(() => {
-              let br: any = boardRef;
-              br.current.reloadBoard();
-              let tr: any = timerRef;
-              tr.current.resetTimer();
-            }, 0);
             setStop(false);
           }}
         >
@@ -357,12 +384,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
           onPress={() => {
             setAmountDeleteDigit(mass[2].amount);
             setIsVisibleModal(false);
-            setTimeout(() => {
-              let br: any = boardRef;
-              br.current.reloadBoard();
-              let tr: any = timerRef;
-              tr.current.resetTimer();
-            }, 0);
             setStop(false);
           }}
         >
@@ -377,7 +398,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
               />
             )}
           </View>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </>
     );
   };
@@ -442,7 +463,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
           </SudokuConsumer>
         </ScrollView>
         <BannerAd
-          unitId={"ca-app-pub-7449816204078262/3996503455"}
+          unitId={TestIds.BANNER}
           size={BannerAdSize.BANNER}
           requestOptions={{
             requestNonPersonalizedAdsOnly: true
