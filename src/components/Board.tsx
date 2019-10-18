@@ -31,7 +31,7 @@ const Board = forwardRef(({ amountDeleteDigit }: IBoard, ref) => {
   };
 
   const _getBoardFromAS = async () => {
-    _settingBoard(30);
+    _settingBoard();
 
     let board = await AsyncStorage.getItem("board");
 
@@ -72,8 +72,6 @@ const Board = forwardRef(({ amountDeleteDigit }: IBoard, ref) => {
 
       newUserBoard[column][row].digit = digit;
       setUserBoard(newUserBoard);
-      console.log("amountDeleteDigit", amountDeleteDigit);
-      console.log("counter", counter);
       if (amountDeleteDigit === counter) {
         EventEmitter.dispatch(
           "checked_board",
@@ -101,6 +99,10 @@ const Board = forwardRef(({ amountDeleteDigit }: IBoard, ref) => {
 
     getBoard() {
       return userBoard;
+    },
+
+    getAmount() {
+      return amountDeleteDigit;
     }
   }));
 
