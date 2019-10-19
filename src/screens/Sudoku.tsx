@@ -9,7 +9,6 @@ import {
   AsyncStorage,
   AppState
 } from "react-native";
-import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
 import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
@@ -23,6 +22,7 @@ import { SudokuConsumer } from "./../scripts/sudokuContext";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 import CustomModal from "../components/CustomModal";
 import EventEmitter from "../scripts/customEvents";
+import Banner from "../components/Banner";
 
 interface IShowModal {
   title: string;
@@ -396,17 +396,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
             )}
           </SudokuConsumer>
         </ScrollView>
-        <BannerAd
-          unitId={TestIds.BANNER}
-          size={BannerAdSize.BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true
-          }}
-          onAdLoaded={() => {}}
-          onAdFailedToLoad={(error: any) => {
-            console.log("Advert failed to load: ", error);
-          }}
-        />
+        <Banner />
       </View>
     </>
   );
