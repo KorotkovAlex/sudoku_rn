@@ -9,7 +9,6 @@ import {
   AsyncStorage,
   AppState
 } from "react-native";
-import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
 import SplashScreen from "react-native-splash-screen";
 
 import Board from "../components/Board";
@@ -23,6 +22,7 @@ import { SudokuConsumer } from "./../scripts/sudokuContext";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 import CustomModal from "../components/CustomModal";
 import EventEmitter from "../scripts/customEvents";
+import Banner from "../components/Banner";
 
 interface IShowModal {
   title: string;
@@ -305,32 +305,41 @@ const Sudoku = ({ navigation }: ISudoku) => {
     return (
       <>
         {mass.map((item, index) => {
-          return <TouchableHighlight
-            key={index}
-            underlayColor={theme.light.underlayPersik}
-            style={{
-              paddingVertical: 15,
-              borderRadius: 5,
-              marginBottom: 5
-            }}
-            onPress={() => {
-              setAmountDeleteDigit(item.amount);
-              setIsVisibleModal(false);
-              setStop(false);
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+          return (
+            <TouchableHighlight
+              key={index}
+              underlayColor={theme.light.underlayPersik}
+              style={{
+                paddingVertical: 15,
+                borderRadius: 5,
+                marginBottom: 5
+              }}
+              onPress={() => {
+                setAmountDeleteDigit(item.amount);
+                setIsVisibleModal(false);
+                setStop(false);
+              }}
             >
-              <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
-              {item.amount === amountDeleteDigit && (
-                <Image
-                  style={{ tintColor: theme.light.persik, width: 20, height: 20 }}
-                  source={require("../../assets/icons/Check_in_circle.png")}
-                />
-              )}
-            </View>
-          </TouchableHighlight>;
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between"
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>{item.title}</Text>
+                {item.amount === amountDeleteDigit && (
+                  <Image
+                    style={{
+                      tintColor: theme.light.persik,
+                      width: 20,
+                      height: 20
+                    }}
+                    source={require("../../assets/icons/Check_in_circle.png")}
+                  />
+                )}
+              </View>
+            </TouchableHighlight>
+          );
         })}
       </>
     );
@@ -352,13 +361,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
           end={{ x: 1, y: 0 }}
           colors={theme.light.linear_gradient}
           style={{ flex: 1 }}
-        >
-          <CustomHeader
-            leftItem={_renderLeftItem()}
-            centerItem={_renderCenterItem()}
-            rightItem={_renderRightItem()}
-          />
-        </LinearGradient>
+        ></LinearGradient>
         <View style={{ flex: 2 }} />
       </View>
 
@@ -371,6 +374,12 @@ const Sudoku = ({ navigation }: ISudoku) => {
           right: 0
         }}
       >
+        <CustomHeader
+          leftItem={_renderLeftItem()}
+          centerItem={_renderCenterItem()}
+          rightItem={_renderRightItem()}
+        />
+
         <ScrollView>
           <SudokuConsumer>
             {({ dimensions }) => (
@@ -378,7 +387,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
                 style={[
                   styles.view,
                   {
-                    paddingTop: dimensions.height * 0.14
+                    marginTop: 10
                   }
                 ]}
               >
@@ -395,17 +404,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
             )}
           </SudokuConsumer>
         </ScrollView>
-        <BannerAd
-          unitId={TestIds.BANNER}
-          size={BannerAdSize.BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true
-          }}
-          onAdLoaded={() => {}}
-          onAdFailedToLoad={(error: any) => {
-            console.log("Advert failed to load: ", error);
-          }}
-        />
+        <Banner />
       </View>
     </>
   );
