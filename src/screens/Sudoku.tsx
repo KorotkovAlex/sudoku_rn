@@ -61,8 +61,16 @@ const Sudoku = ({ navigation }: ISudoku) => {
     });
 
     EventEmitter.subscribe("what_start", async () => {
-      let board: any = await AsyncStorage.getItem("board");
-      setAmountDeleteDigit(JSON.parse(board).amountDigit);
+      let getBoard: any = await AsyncStorage.getItem("board");
+      let board = JSON.parse(getBoard);
+      if (!board.timer) {
+        board.timer.seconds = "00";
+        board.timer.minutes = "00";
+      }
+      if (!board.amountDigit) {
+        board.amountDigit = 30;
+      }
+      setAmountDeleteDigit(board.amountDigit);
       await _continue();
     });
 
