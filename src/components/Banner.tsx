@@ -1,8 +1,14 @@
 import React from "react";
-import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
+import {
+  firebase,
+  BannerAd,
+  BannerAdSize,
+  TestIds
+} from "@react-native-firebase/admob";
 
 export default class Banner extends React.PureComponent {
   render() {
+    console.log("render");
     return (
       <BannerAd
         unitId={TestIds.BANNER}
@@ -10,7 +16,9 @@ export default class Banner extends React.PureComponent {
         requestOptions={{
           requestNonPersonalizedAdsOnly: true
         }}
-        onAdLoaded={() => {}}
+        onAdLoaded={() => {
+          console.log("end");
+        }}
         onAdFailedToLoad={(error: any) => {
           console.log("Advert failed to load: ", error);
         }}
