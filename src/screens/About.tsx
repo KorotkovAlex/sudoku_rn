@@ -2,6 +2,8 @@ import React from "react";
 import { Text, View, Image } from "react-native";
 import ConfigSingleton from "../scripts/ConfigSingleton";
 import LinearGradient from "react-native-linear-gradient";
+import Config from "react-native-config";
+
 import CustomHeader from "../components/Header";
 import theme from "../shared/Constants";
 import { ScrollView } from "react-native-gesture-handler";
@@ -22,26 +24,26 @@ const About = ({ navigation }: any) => {
           colors={theme.light.linear_gradient}
           style={{ flex: 1 }}
         >
-          <View style={{margin: 5}}>
-          <CustomHeader
-            leftItem={
-              <CustomButton onPress={() => navigation.goBack()}>
-                <Image
-                  source={require("../../assets/icons/LeftArrow.png")}
-                  style={{
-                    height: 25,
-                    width: 25,
-                    tintColor: theme.light.white
-                  }}
-                />
-              </CustomButton>
-            }
-            centerItem={
-              <Text style={{ color: theme.light.white, fontSize: 16 }}>
-                {dictionary.ABOUT.TITLE}
-              </Text>
-            }
-          />
+          <View style={{ margin: 5 }}>
+            <CustomHeader
+              leftItem={
+                <CustomButton onPress={() => navigation.goBack()}>
+                  <Image
+                    source={require("../../assets/icons/LeftArrow.png")}
+                    style={{
+                      height: 25,
+                      width: 25,
+                      tintColor: theme.light.white
+                    }}
+                  />
+                </CustomButton>
+              }
+              centerItem={
+                <Text style={{ color: theme.light.white, fontSize: 16 }}>
+                  {dictionary.ABOUT.TITLE}
+                </Text>
+              }
+            />
           </View>
         </LinearGradient>
       </View>
@@ -79,7 +81,7 @@ const About = ({ navigation }: any) => {
             {dictionary.ABOUT.ABOUT_TITLE}
           </Text>
           <Text style={{ textAlign: "justify", fontSize: 16 }}>
-            {dictionary.ABOUT.ABOUT_APP}
+            {`${dictionary.ABOUT.ABOUT_APP} ${Config.VERSION_NAME}`}
           </Text>
         </View>
       </ScrollView>
