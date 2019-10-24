@@ -85,6 +85,12 @@ project.ext.vectoricons = [
     iconFontNames: [ 'MaterialIcons.ttf', 'MaterialCommunityIcons.ttf' ]
 ]
 
+project.ext.envConfigFiles = [
+    debug: ".env",
+    release: ".env.prod",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -133,11 +139,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.app_sudoku_rn"
+        applicationId project.env.get("APP_ID")
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.6"
+        versionCode project.env.get("ENV_VERSION_CODE").toInteger()
+        versionName project.env.get("ENV_VERSION_NAME")
+        resValue "string", "build_config_package", "com.app_sudoku_rn"
     }
     splits {
         abi {

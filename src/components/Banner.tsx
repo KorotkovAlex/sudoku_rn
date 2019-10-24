@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  firebase,
-  BannerAd,
-  BannerAdSize,
-  TestIds
-} from "@react-native-firebase/admob";
+import { BannerAd, BannerAdSize, TestIds } from "@react-native-firebase/admob";
+import Config from "react-native-config";
 
 export default class Banner extends React.PureComponent {
   render() {
-    console.log("render");
     return (
       <BannerAd
-        unitId={TestIds.BANNER}
+        unitId={Config.AD_BANNER || TestIds.BANNER}
         size={BannerAdSize.BANNER}
         requestOptions={{
           requestNonPersonalizedAdsOnly: true
