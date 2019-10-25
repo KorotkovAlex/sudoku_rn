@@ -92,9 +92,20 @@ const Board = forwardRef(({ amountDeleteDigit }: IBoard, ref) => {
     },
 
     async continue() {
-      let board: any = await AsyncStorage.getItem("board");
-
-      setUserBoard(JSON.parse(board).userBoard);
+      let getBoard: any = await AsyncStorage.getItem("board");
+      let board = JSON.parse(getBoard);
+      let countDigit: number = 0;
+      for (let i = 0; i < board.userBoard.length; i++) {
+        for (let j = 0; j < board.userBoard.length; j++) {
+          if (!board.userBoard[i][j].isPermanent) {
+            if (board.userBoard[i][j].digit !== 0) {
+              countDigit = countDigit + 1;
+            }
+          }
+        }
+      }
+      counter = countDigit;
+      setUserBoard(board.userBoard);
     },
 
     getBoard() {

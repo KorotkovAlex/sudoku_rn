@@ -21,7 +21,10 @@ const Timer = forwardRef(({ stop }: ITimer, ref) => {
     async setTimer() {
       let board: any = await AsyncStorage.getItem("board");
       const { timer } = JSON.parse(board);
-
+      if (!timer) {
+        timer.seconds = "00";
+        timer.minutes = "00";
+      }
       setSecond(timer.seconds);
       setMinute(timer.minutes);
 

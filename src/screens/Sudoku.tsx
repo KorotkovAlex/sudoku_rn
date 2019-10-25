@@ -49,7 +49,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
   const [titleModal, setTitleModal] = useState("Title");
   const [bodyModal, setBodyModal] = useState(<></>);
 
-  const [amountDeleteDigit, setAmountDeleteDigit] = useState(30);
+  const [amountDeleteDigit, setAmountDeleteDigit] = useState(2);
 
   const _onPressBackdrop = () => {
     setIsVisibleModal(false);
@@ -63,10 +63,6 @@ const Sudoku = ({ navigation }: ISudoku) => {
     EventEmitter.subscribe("what_start", async () => {
       let getBoard: any = await AsyncStorage.getItem("board");
       let board = JSON.parse(getBoard);
-      if (!board.timer) {
-        board.timer.seconds = "00";
-        board.timer.minutes = "00";
-      }
       if (!board.amountDigit) {
         board.amountDigit = 30;
       }
