@@ -49,7 +49,7 @@ const Sudoku = ({ navigation }: ISudoku) => {
   const [titleModal, setTitleModal] = useState("Title");
   const [bodyModal, setBodyModal] = useState(<></>);
 
-  const [amountDeleteDigit, setAmountDeleteDigit] = useState(2);
+  const [amountDeleteDigit, setAmountDeleteDigit] = useState(30);
 
   const _onPressBackdrop = () => {
     setIsVisibleModal(false);
