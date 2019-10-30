@@ -7,7 +7,7 @@ export default class Banner extends React.PureComponent {
     return (
       <BannerAd
         unitId={Config.AD_BANNER || TestIds.BANNER}
-        size={BannerAdSize.BANNER}
+        size={BannerAdSize.SMART_BANNER}
         requestOptions={{
           requestNonPersonalizedAdsOnly: true
         }}
