@@ -1,6 +1,6 @@
 # Sudoku
 
-Приложение Судоку разработанное на платформе React Native. 
+Sudoku application developed on the React Native.
 
 ![Иллюстрация к проекту](https://lh3.googleusercontent.com/cXiZ8Fr14hACRlNcshRZZgD1ht0GdPz4FAoM7WHu-3NxZVoIF8de_Dy9EV9ZcU8mHw=s360-rw)
 
@@ -8,7 +8,7 @@
 
 A step by step series of examples that tell you how to get a development env running
 
-Для установки всех библиотек используйте одну из этих команд:
+For installing libs you should  use  one of these command:
 
 ```
 $ yarn
@@ -17,18 +17,19 @@ $ npm install
 
 ### Start application
 
-Для того что бы запустить данное приложение на андроиде надо выполнить команду:
+For starting the app on android use one of these command:
 
 ```
 $ yarn android
-$ npm android
+$ npm run android
 ```
 
-Наслаждайтесь рабочим приложением.
+Enjoy the working application.
 
 ## Using
 
-Пример работы приложения:
+Exemple of the app on [youtube](https://www.youtube.com/watch?v=kw01-Bg0cdo&feature=youtu.be):
+
 [<img src="https://img.youtube.com/vi/kw01-Bg0cdo/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=kw01-Bg0cdo&feature=youtu.be)
 
 ## Authors
